@@ -1,0 +1,37 @@
+En python, écrire un programme qui commence par détruire les répertoires L1 à L15, et qui les recrée. 
+Attention, les répertoires ne sont peut-être pas vides au départ, ils doivent quand même être détruits.
+Attention, il faut remplacer les chiffres (1 à 15) par leur valeur hexadécimale. Donc, détruire puis créer des répertoires L1 à LF. 
+Ensuite, lire le fichier de mots "words.txt" mot par mot et  créer un fichier "WORDS" dans les répertoires L1 à LF. 
+Le fichier "WORDS" dans L1 contient tous les mots de 1 lettre, dans L2 il contient tous les mots de 2 lettres, etc. 
+Attention, chaque mot de ces fichiers WORDS doit être complété par des espaces jusqu'à 16 caractères et ne pas être terminé par un retour à la ligne.
+Ensuite, lire chaque mot du fichier WORD du répertoire L2. 
+Attention, les mots ont 16 caractères et ne sont pas séparés par les retours à la ligne. Si un mot a moins de 16 caractères, il est complété par des octets de valeur 0 (et non pas par des espaces !!) jusqu'à 16 caractères 
+Si par exemple un mot contient la lettre A en première position il faut créer un fichier. Le nom du fichier comporte 2 caractères : le premier caractère est la lettre (lettre A dans cet exemple),  le second caractère est la position en hexadécimal (1 dans cet exemple).
+Si on trouve B en deuxième position, il faut créer un fichier nommé B2, et faire ainsi pour toutes les lettres trouvées  et toutes les positions.
+Lors de la création du fichier, il faut remplir le fichier avec des octets à 0. Le nombre d'octets à écrire est déterminé par  le nombre de mots présents dans le fichier WORDS. Il faut suffisamment d'octets pour que le nombre total de bits soit supérieur ou égal  au nom de mots présents dans le fichier WORDS.
+Si un fichier existe déjà, ne rien faire. Ce nombre doit être mémorisé pour chaque répertoire (il est différent pour chaque répertoire). Il sera utilisé ensuite.
+Faire de même pour chaque répertoire L2 à LF.
+
+Ensuite, pour le répertoire L2, ouvrir le fichier WORDS, lire chaque mot.
+Attention, le fichier WORDS est composé de blocs de 16 octets. Chaque bloc est composé d'un mot suivi d'octets de valeur 0. 
+Il ne faut récupérer que le mot, sans les O.
+Pour chaque mot ainsi lu, il faut examiner toutes les lettres et leur position dans le mot.
+La lettre et la position (convertie en hexadécimal) déterminent le fichier binaire à ouvrir. Dans ce fichier, il fait mettre à 1 le bit  dont la position dans le fichier est égale à la position du mot dans le fichier WORDS. 
+Les bits sont comptés en partant du bit de poids faible.
+Exemple avec le mot ABC, qui serait le 9ème mot dans le fichier WORDS du répertoire L3 :
+Dans ce mot, la lettre A est en position 1, il faut donc ouvrir le fichier A1, dans le fichier A1, il faut mettre à 1 le 9ème bit,  c'est-à-dire le 1er bit (bit de poids faible) du deuxième octet.
+Les autres bits du fichier doivent rester inchangés. Le fichier est enregistré.
+Enfin, il faut créer un fichier nomme "L" dans le répertoire.
+Ce fichier doit contenir autant de bits à 1 que le nombre mémorisé précédemment pour ce répertoire. Les bits restant, s'il y en a, sont à 0.
+Faire de même pour chaque répertoire, de L2 à LF.
+Le temps d'exécution serait beaucoup trop long si on applique l'algorithme tel quel. 
+Il faut donc optimiser la fonction qui traite les fichiers WORDS pour qu'elle soit performante. 
+Par ailleurs, il faudrait mesurer le temps total, et le temps pour chaque répertoire. 
+Il faut aussi afficher un message à chaque fois que le programme commence à traiter un nouveau répertoire.
+Commenter le plus possible ce code pour donner toutes les explications sur chaque ligne de code.
+
+
+Points d'attention :
+La partie qui génère les fichiers pour chaque lettre et position doit être performante. 
+Il faut l'optimiser, en utilisant la mémoire autant que possible.
+Par ailleurs, j'ai demandé que les mots du fichiers WORDS soient complété à 16 caractères par des octet de valeur 0 et non pas par des espaces.

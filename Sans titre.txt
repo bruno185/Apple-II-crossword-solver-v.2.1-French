@@ -1,0 +1,32 @@
+
+%CADIUS%  DELETEFOLDER %poimage% %Prodosvol%L1
+%CADIUS%  DELETEFOLDER %poimage% %Prodosvol%L2
+%CADIUS%  DELETEFOLDER %poimage% %Prodosvol%L3
+%CADIUS%  DELETEFOLDER %poimage% %Prodosvol%L4
+%CADIUS%  DELETEFOLDER %poimage% %Prodosvol%L5
+%CADIUS%  DELETEFOLDER %poimage% %Prodosvol%L6
+%CADIUS%  DELETEFOLDER %poimage% %Prodosvol%L7
+%CADIUS%  DELETEFOLDER %poimage% %Prodosvol%L8
+%CADIUS%  DELETEFOLDER %poimage% %Prodosvol%L9
+%CADIUS%  DELETEFOLDER %poimage% %Prodosvol%LA
+%CADIUS%  DELETEFOLDER %poimage% %Prodosvol%LB
+%CADIUS%  DELETEFOLDER %poimage% %Prodosvol%LC
+%CADIUS%  DELETEFOLDER %poimage% %Prodosvol%LD
+%CADIUS%  DELETEFOLDER %poimage% %Prodosvol%LE
+%CADIUS%  DELETEFOLDER %poimage% %Prodosvol%LF 
+
+%CADIUS%  ADDFOLDER %poimage% %Prodosvol%L2 python\L1
+%CADIUS%  ADDFOLDER %poimage% %Prodosvol%L2 python\L2
+%CADIUS%  ADDFOLDER %poimage% %Prodosvol%L2 python\L3
+%CADIUS%  ADDFOLDER %poimage% %Prodosvol%L2 python\L4
+%CADIUS%  ADDFOLDER %poimage% %Prodosvol%L2 python\L5
+%CADIUS%  ADDFOLDER %poimage% %Prodosvol%L2 python\L6
+%CADIUS%  ADDFOLDER %poimage% %Prodosvol%L2 python\L7
+%CADIUS%  ADDFOLDER %poimage% %Prodosvol%L2 python\L8
+%CADIUS%  ADDFOLDER %poimage% %Prodosvol%L2 python\L9
+%CADIUS%  ADDFOLDER %poimage% %Prodosvol%L2 python\LA
+%CADIUS%  ADDFOLDER %poimage% %Prodosvol%L2 python\LB
+%CADIUS%  ADDFOLDER %poimage% %Prodosvol%L2 python\LC
+%CADIUS%  ADDFOLDER %poimage% %Prodosvol%L2 python\LD
+%CADIUS%  ADDFOLDER %poimage% %Prodosvol%L2 python\LE
+%CADIUS%  ADDFOLDER %poimage% %Prodosvol%L2 python\LF
