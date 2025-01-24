@@ -13,8 +13,8 @@ Dans cette version, j'ai utilisé demandé à ChatGPT d'écrire ce programme en 
 
 ## Usage
 Cette archive contient une image disque ProDOS (cw.po) à utiliser avec votre émulateur Apple II favori ou votre Apple II.
-* Démarrez votre Apple II avec la disquette « cw.po ». Pour Applewin, l'image disque doit être dans le "Hard disk drive".
-* Lancez le programme avec « brun cw », ou « -cw » (le programme STARTUP devrait le faire pour vous).
+* Démarrez votre Apple II avec la disquette "cw.po". Pour Applewin, l'image disque doit être dans le "Hard disk drive".
+* Lancez le programme avec "brun cw", ou « -cw » (le programme STARTUP devrait le faire pour vous).
 * Tapez des lettres majuscules, ou ? pour les lettres inconnues. Entrez pour valider. Escape ou ctrl-c pour quitter.
 
 ## Performances
@@ -81,6 +81,6 @@ Voici la configuration :
 
 Note :
 
-Le fichier do_asm.bat compile les fichiers source (*.s) assembleur avec Merlin32, et dépose le fichier binaire 6502 ainsi créé sur l'image disque cw.po. Si vous souhaitez compiler vous-même, vous devrez adapter le chemin vers le répertoire Merlin32, vers Applewin et vers Applecommander dans le fichier DoMerlin.bat.
+Le fichier "do_asm.bat" compile les fichiers source (*.s) assembleur avec Merlin32, et dépose le fichier binaire 6502 ainsi créé sur l'image disque "cw.po". Si vous souhaitez compiler vous-même, vous devrez modifier le fichier do_asm.bat pour adapter le chemin vers le répertoire Merlin32, vers Applewin et vers Applecommander dans le fichier "do_asm.bat".
 
-Le fichier do_index.bat lance le programme python qui génère les indexs à partir de la liste de mots. Les fichiers index sont ensuite copiés sur l'image disque cw.po
+Le fichier "do_index.bat" lance le programme python qui génère les indexs à partir de la liste de mots. Les fichiers index sont ensuite copiés sur l'image disque "cw.po".
