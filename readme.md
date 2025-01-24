@@ -25,11 +25,9 @@ Sur un Apple II ou un émulateur réglé à la vitesse normale, le traitement es
 Le fichier texte de la liste de mots est obtenu en ligne, c'est la liste officielle du Scrabble (ODS), version 9 (2024).
 Dans les précédentes versions de mon "Apple II Crossword Solver", j'avais utilisé la version 8 (ODS8, 2020). 
 Ces fichiers son dans le répertoire "python/Officiel du Scrabble".
-
 Dans la version 9, de nombreux mots ont été ajoutés (voir le fichier "mots ajoutés en 2024.txt") 
 Plus étonnant, des mots ont été retirés par l'éditeur du jeu de Scrabble (voir le fichier "mots retirés en 2024.txt") 
 J'ai réintégré ces mots dans l'ODS9, l'ensemble étant enregistré dans le fichier "ods9 (2024)++.txt".
-
 Les mots de l'ODS9 sont répartis dans les répertoire L2 à LF, en fonction de leur longueur (mots de 2 lettre à mots de 15 lettres). Chacun de ces répertoires contient un fichier "WORDS" comprenant ce sous-ensemble de mots.
 La recherche est donc réduite aux seuls mots dont la longueur est égale aux patterns de recherche, ce qui l'accélère sensiblement.
 
