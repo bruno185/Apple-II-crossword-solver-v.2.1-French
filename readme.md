@@ -81,6 +81,6 @@ Voici la configuration :
 
 Note :
 
-Le fichier "do_asm.bat" compile les fichiers source (*.s) assembleur avec Merlin32, et dépose le fichier binaire 6502 ainsi créé sur l'image disque "cw.po". Si vous souhaitez compiler vous-même, vous devrez modifier le fichier do_asm.bat pour adapter le chemin vers le répertoire Merlin32, vers Applewin et vers Applecommander dans le fichier "do_asm.bat".
+Le fichier "do_asm.bat" compile les fichiers source (*.s) assembleur avec Merlin32, et dépose le fichier binaire 6502 ainsi créé sur l'image disque "cw.po". Si vous souhaitez compiler vous-même, vous devrez modifier le fichier "do_asm.bat" pour adapter le chemin vers des répertoires Merlin32, Applewin et Applecommander.
 
 Le fichier "do_index.bat" lance le programme python qui génère les indexs à partir de la liste de mots. Les fichiers index sont ensuite copiés sur l'image disque "cw.po".
