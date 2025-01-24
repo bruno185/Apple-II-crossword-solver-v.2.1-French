@@ -30,14 +30,16 @@ Dans la version 9, de nombreux mots ont été ajoutés (voir le fichier "mots aj
 Plus étonnant, des mots ont été retirés par l'éditeur du jeu de Scrabble (voir le fichier "mots retirés en 2024.txt") 
 J'ai réintégré ces mots dans l'ODS9, l'ensemble étant enregistré dans le fichier "ods9 (2024)++.txt".
 
-* Les index
-Les mots de l'ODS9 sont répartis dans les répertoire L2 à LF, en fonction de leur longueur. 
-Chacun de ces répertoires contient un fichier "WORDS" comprenant ce sous-ensemble de mots.
+Les mots de l'ODS9 sont répartis dans les répertoire L2 à LF, en fonction de leur longueur (mots de 2 lettre à mots de 15 lettres). Chacun de ces répertoires contient un fichier "WORDS" comprenant ce sous-ensemble de mots.
 La recherche est donc réduite aux seuls mots dont la longueur est égale aux patterns de recherche, ce qui l'accélère sensiblement.
+
+* Les index
 Il y a un index par lettre et par position. Exemple : 
 Fichier index A1 pour les mots avec A en position 1, B2 pour les mots avec B en position 2, etc. 
 Les index sont des bitmaps. La position des bit à 1 indique la position du mot dans le fichier "WORDS". 
-Exemple : dans l'index F6, si le 9eme bit est à 1 (= bit 1 de l'octet 2),  cela signifie que le 9eme mot du fichier "WORDS" contient un F en 6eme position. 
+Exemple : dans l'index F6, si le 9eme bit est à 1 (= bit 1 de l'octet 2), cela signifie que le 9eme mot du fichier "WORDS" contient un F en 6eme position. 
+Il est facile en assembleur de combiner ces bitmaps par l'opération logique AND, pour obtenir la position des mots recherchés. Exemple avec le pattern : V??O :
+Le programme ira dans le répertoire L4, puisque les mots recherchés ont 4 lettres, il chargera l'index V1 (V en position 1) et l'index O4 (O en position 4). Il fera un AND entre ces deux bitmaps. Enfin il parcourra le bitmap résultant, et  chaque bit à 1 lui donnera la position d'un mot correspondant au pattern dans la liste de mots "WORDS du répertoire L4 (dans ce cas : VELO, VETO,etc.)
 
 * La génération des index
 Les index sont générés par un programme écrit en python.
@@ -45,7 +47,8 @@ Le programme python a été écrit par ChatGPT, à partir de spécifications pr�
 Ce fichier contient deux parties. 
 La première partie fait générer par ChatGPT un programme pas tout à fait correct. 
 Il faut indiquer la seconde partie à ChatGPT pour qui fasse les corrections nécessaires. 
-Le programme est alors correct, les fichiers générés sont identiques à ceux que produit la le programme que j'avais écrit en Delphi  dans les précédentes versions.
+Le programme est alors correct. Les fichiers générés sont identiques à ceux que produit la le programme que j'avais écrit en Delphi dans les précédentes versions.
+Jusqu'à présent, il n'a pas été possible de faire générer le bon programme en une passe, certaines consignes n'étant pas respectées par ChatGPT.
 
 ## Nouveautés de la version 2.1 French
 * Vocabulaire enrichi : Officiel du Scrabble v9 (2024)
