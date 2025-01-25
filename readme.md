@@ -53,7 +53,7 @@ Jusqu'à présent, il n'a pas été possible de faire générer le bon programme
 * Vocabulaire enrichi : Officiel du Scrabble v9 (2024)
 * Correction de bugs mineurs
 * Améioration des performances du code assembleur 6502
-* Prend les minuscules 
+* Accepte les lettres minuscules
 * Génération des index par un programme python, lui-même généré par ChatGPT
 * Très grande efficacité de ce programme
 * Automatisation de la copie des fichiers index dans l'image disque par Cadius (cf. "do_index.bat")
