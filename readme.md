@@ -1,4 +1,4 @@
-# Apple II Crossword Solver
+# Apple II Crossword Solver  
 
 
 Voici un programme pour Apple II (e, c, GS) pour aider les cruciverbistes.
@@ -9,9 +9,9 @@ Exemple : A en première position, lettre inconnue en position 2, et A en derni�
 Bien sûr, les données (mots et indexes) ne tiennent pas sur une disquette, mais sur un disque dur physique ou virtuel, et occupent environ 20 Mo.
 
 Dans les versions précédentes, j'avais écrit un programme en Delphi pour générer les index à partir de la liste de mots.
-Dans cette version, j'ai utilisé demandé à ChatGPT d'écrire ce programme en python !! (voir plus bas)
+Dans cette version, j'ai demandé à ChatGPT d'écrire ce programme en python !! (voir plus bas)
 
-## Usage
+## Utilisation
 Cette archive contient une image disque ProDOS (cw.po) à utiliser avec votre émulateur Apple II favori ou votre Apple II.
 * Démarrez votre Apple II avec la disquette "cw.po". Pour Applewin, l'image disque doit être dans le "Hard disk drive".
 * Lancez le programme avec "brun cw", ou « -cw » (le programme STARTUP devrait le faire pour vous).
@@ -22,14 +22,14 @@ Sur un Apple II ou un émulateur réglé à la vitesse normale, le traitement es
 
 ## Techniques
 * La liste de mots  
-Le fichier texte de la liste de mots est obtenu en ligne, c'est la liste officielle du Scrabble (ODS), version 9 (2024).
+Le fichier texte de la liste de mots est obtenu en ligne, c'est la liste officielle du Scrabble (ODS) version 9, devenue la référence au 1er janvier 2024.
 Dans les précédentes versions de mon "Apple II Crossword Solver", j'avais utilisé la version 8 (ODS8, 2020). 
-Ces fichiers son dans le répertoire "python/Officiel du Scrabble".
-Dans la version 9, de nombreux mots ont été ajoutés (voir le fichier "mots ajoutés en 2024.txt") 
-Plus étonnant, des mots ont été retirés par l'éditeur du jeu de Scrabble (voir le fichier "mots retirés en 2024.txt") 
+Ces fichiers sont dans le répertoire "python/Officiel du Scrabble".
+Dans la version 9, de nombreux mots ont été ajoutés par rapport à la version 8, voir le fichier "mots ajoutés en 2024.txt".
+Plus étonnant, des mots ont été retirés par l'éditeur du jeu de Scrabble, voir le fichier "mots retirés en 2024.txt".
 J'ai réintégré ces mots dans l'ODS9, l'ensemble étant enregistré dans le fichier "ods9 (2024)++.txt".
-Les mots de l'ODS9 sont répartis dans les répertoire L2 à LF, en fonction de leur longueur (mots de 2 lettre à mots de 15 lettres). Chacun de ces répertoires contient un fichier "WORDS" comprenant ce sous-ensemble de mots.
-La recherche est donc réduite aux seuls mots dont la longueur est égale aux patterns de recherche, ce qui l'accélère sensiblement.
+Les mots de l'ODS9 sont répartis dans les répertoire L2 à LF, en fonction de leur longueur (mots de 2 lettres à mots de 15 lettres). Chacun de ces répertoires contient un fichier "WORDS" comprenant ce sous-ensemble de mots.
+La recherche est donc réduite aux seuls mots dont la longueur est égale au pattern de recherche tapé par l'utilisateur, ce qui l'accélère sensiblement.
 
 * Les index  
 Il y a un index par lettre et par position. Exemple : 
