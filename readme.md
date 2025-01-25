@@ -62,7 +62,7 @@ Jusqu'à présent, il n'a pas été possible de faire générer le bon programme
 ## Credits
 L'algorithme est celui utilisé dans le logiciel français « Easy Puss », pour ceux qui se souviennent de ce logiciel de base de données pour Apple II, publié dans les années 80 par l'éditeur de "4e Dimension". Il est appliqué aux lettres et à leurs positions dans le cas présent.
 
-## Requirements to compile and run
+## Conditions requises pour la compilation et l'exécution
 
 Voici la configuration :
 
