@@ -584,7 +584,14 @@ glnsuite
         cmp #'A'        ; char between A and  Z are ok
         bcc readkeyboard ; < A : loop
         cmp #'Z'+1
-        bcs readkeyboard ; > Z : loop 
+        bcc okchar      ; < Z+1, so char is between A and Z
+        ; here if char > Z
+        cmp #'a'                ; test for lowercase
+        bcc readkeyboard        ; < a
+        cmp #'z'+1
+        bcs readkeyboard        ; > z
+        and #%11011111
+
 *<sym> 
 okchar  
         ldy pattern     ; pattern must not exceed 15 chars 

@@ -1,6 +1,6 @@
 rem ------------ make indexes ------------
 cd python
-py ./p11.py
+py ./make_index.py
 cd ..
 
 Set CADIUS=F:\Bruno\Dev\AppleWin\Utilitaires\CADIUS.exe
@@ -12,5 +12,3 @@ for %%i in (1 2 3 4 5 6 7 8 9 A B C D E F) do (
 
 for %%i in (1 2 3 4 5 6 7 8 9 A B C D E F) do (
 %CADIUS%  ADDFOLDER %poimage% %Prodosvol%%%i python\L%%i )
-
-

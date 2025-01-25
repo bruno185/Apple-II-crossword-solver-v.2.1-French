@@ -3,7 +3,7 @@ Attention, les répertoires ne sont peut-être pas vides au départ, ils doivent
 Attention, il faut remplacer les chiffres (1 à 15) par leur valeur hexadécimale. Donc, détruire puis créer des répertoires L1 à LF. 
 Ensuite, lire le fichier de mots "words.txt" mot par mot et  créer un fichier "WORDS" dans les répertoires L1 à LF. 
 Le fichier "WORDS" dans L1 contient tous les mots de 1 lettre, dans L2 il contient tous les mots de 2 lettres, etc. 
-Attention, chaque mot de ces fichiers WORDS doit être complété par des espaces jusqu'à 16 caractères et ne pas être terminé par un retour à la ligne.
+Attention, chaque mot de ces fichiers WORDS doit être complété par des octet de valeur 0 jusqu'à 16 caractères et ne pas être terminé par un retour à la ligne.
 Ensuite, lire chaque mot du fichier WORD du répertoire L2. 
 Attention, les mots ont 16 caractères et ne sont pas séparés par les retours à la ligne. Si un mot a moins de 16 caractères, il est complété par des octets de valeur 0 (et non pas par des espaces !!) jusqu'à 16 caractères 
 Si par exemple un mot contient la lettre A en première position il faut créer un fichier. Le nom du fichier comporte 2 caractères : le premier caractère est la lettre (lettre A dans cet exemple),  le second caractère est la position en hexadécimal (1 dans cet exemple).
@@ -25,7 +25,7 @@ Enfin, il faut créer un fichier nomme "L" dans le répertoire.
 Ce fichier doit contenir autant de bits à 1 que le nombre mémorisé précédemment pour ce répertoire. Les bits restant, s'il y en a, sont à 0.
 Faire de même pour chaque répertoire, de L2 à LF.
 Le temps d'exécution serait beaucoup trop long si on applique l'algorithme tel quel. 
-Il faut donc optimiser la fonction qui traite les fichiers WORDS pour qu'elle soit performante. 
+Il faut donc optimiser la fonction qui traite les fichiers WORDS pour qu'elle soit performante, en utilisant la mémoire le plus possible.
 Par ailleurs, il faudrait mesurer le temps total, et le temps pour chaque répertoire. 
 Il faut aussi afficher un message à chaque fois que le programme commence à traiter un nouveau répertoire.
 Commenter le plus possible ce code pour donner toutes les explications sur chaque ligne de code.
@@ -34,4 +34,3 @@ Commenter le plus possible ce code pour donner toutes les explications sur chaqu
 Points d'attention :
 La partie qui génère les fichiers pour chaque lettre et position doit être performante. 
 Il faut l'optimiser, en utilisant la mémoire autant que possible.
-Par ailleurs, j'ai demandé que les mots du fichiers WORDS soient complété à 16 caractères par des octet de valeur 0 et non pas par des espaces.

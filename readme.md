@@ -41,21 +41,23 @@ Le programme ira dans le répertoire L4, puisque les mots recherchés ont 4 lett
 
 * La génération des index  
 Les index sont générés par un programme écrit en python.
-Le programme python a été écrit par ChatGPT, à partir de spécifications présentes dans le fichier "python/cahier des charges chatgpt.txt"
+Le programme python ("python/make_index.py") a été écrit par ChatGPT, à partir de spécifications présentes dans le fichier "python/cahier des charges chatgpt.txt"
 Ce fichier contient deux parties. 
 La première partie fait générer par ChatGPT un programme pas tout à fait correct. 
 Il faut indiquer la seconde partie à ChatGPT pour qui fasse les corrections nécessaires. 
 Le programme est alors correct. Les fichiers générés sont identiques à ceux que produit la le programme que j'avais écrit en Delphi dans les précédentes versions.
+Attention : d'une fois sur l'autre, le programme produit par ChatGPT n'est pas exactement le même, avec parfois des régressions et même des bugs bloquants.
 Jusqu'à présent, il n'a pas été possible de faire générer le bon programme en une passe, certaines consignes n'étant pas respectées par ChatGPT.
 
 ## Nouveautés de la version 2.1 French
 * Vocabulaire enrichi : Officiel du Scrabble v9 (2024)
 * Correction de bugs mineurs
 * Améioration des performances du code assembleur 6502
+* Prend les minuscules 
 * Génération des index par un programme python, lui-même généré par ChatGPT
-* Très grande efficacité de ce programme.
-* Utilisation de Cadius pour copier les fichiers index dans l'image disque. 
-* Intégration de mon système de balisage dynamique du code source Merlin, pour le débuggeur d'Applewin (cf. SetBreaks.cpp)
+* Très grande efficacité de ce programme
+* Automatisation de la copie des fichiers index dans l'image disque par Cadius (cf. "do_index.bat")
+* Intégration de mon système de balisage du code source Merlin, pour bénéficier des symboles dans les débuggeur d'Applewin (cf. SetBreaks.cpp)
 
 ## Credits
 L'algorithme est celui utilisé dans le logiciel français « Easy Puss », pour ceux qui se souviennent de ce logiciel de base de données pour Apple II, publié dans les années 80 par l'éditeur de "4e Dimension". Il est appliqué aux lettres et à leurs positions dans le cas présent.
