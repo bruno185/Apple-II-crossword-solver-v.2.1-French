@@ -1,15 +1,15 @@
 # Apple II Crossword Solver  
 
 
-Voici un programme pour Apple II (e, c, GS) pour aider les cruciverbistes.
-La difficulté était de trouver RAPIDEMENT les mots en fonction des lettres connues, parmi un vocabulaire de plus de 407 000 mots !
+Voici un programme pour Apple II (e, c, GS) pour aider les cruciverbistes à trouver des mots.
+La difficulté était de retrouver RAPIDEMENT les mots possibles en fonction des lettres connues, parmi un vocabulaire de plus de 407 000 mots !
 Exemple : A en première position, lettre inconnue en position 2, et A en dernière position
 => ADA, AGA, ANA, ARA, ASA, AXA.
 
 Bien sûr, les données (mots et indexes) ne tiennent pas sur une disquette, mais sur un disque dur physique ou virtuel, et occupent environ 20 Mo.
 
 Dans les versions précédentes, j'avais écrit un programme en Delphi pour générer les index à partir de la liste de mots.
-Dans cette version, j'ai demandé à ChatGPT d'écrire ce programme en python !! (voir plus bas)
+Dans cette version, j'ai demandé à ChatGPT d'écrire ce programme en python !! (voir plus bas).
 
 ## Utilisation
 Cette archive contient une image disque ProDOS (cw.po) à utiliser avec votre émulateur Apple II favori ou votre Apple II.
