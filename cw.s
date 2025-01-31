@@ -10,7 +10,7 @@
 * version 1.1 : get rid of tempo files, works in memory mostly.
 * version 1.2 : add a progress bar
 * version 1.4 : 
-* => new word file (ods8) 402328 words <= 15 chars, + 3 chars : AIRIAL, AIRIAUX, BRIC)
+* => new word file (ods8) 402328 words <= 15 chars, + 3 words : AIRIAL, AIRIAUX, BRIC)
 * => page stop (wait a key, or esc. to abort).
 * version 2.0 : split dictionary and indexes by word length
 * => now indexes don't need to be run length encoded, nor they need to be splited in 4 parts.
@@ -1138,7 +1138,7 @@ filelib str 'index file : '
 *<sym>
 totallib str 'Found words : '
 *<sym>
-patternlib      str 'Enter pattern (A-Z and ?) : '
+patternlib      str 'Enter pattern (A-Z a-z and ?) : '
 *<sym>
 kopatlib        str 'Error in pattern !'
 *<sym>
