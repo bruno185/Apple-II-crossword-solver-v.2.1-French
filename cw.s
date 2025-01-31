@@ -18,9 +18,14 @@
 * version 2.1 french : 
 * => now include Officiel du Scrabble 9 (2024) with new words. 
 * NB : the 64 words deleted by the Scrabble editor (present in ODS8) have been reinstated.
-* => minor optimisation
+* => minor optimisations
 * => debug info for Applewin debugger.
 * => better comments
+*
+* version 2.1.1 french : 
+* analysis of bytes resulting from ANDing index files 
+* is now limited to the strict number required (= length of index file). 
+* In previous versions, a memory area of 4kb was analyzed (from $2000 to $3FFF).
 *
 ********************  memory org.  ***********************
 * Dictionary : 407192 words (402328 words in ODS8)
@@ -29,6 +34,11 @@
 * program : $1000 to $1FFF 
 * bitmap1 : $2000 -> $3FFF  
 * bitmap2 : $4000 -> $5FFF
+* WARNING: these 4 kB memory areas are suitable for a maximum number of 65536 words
+* of the same length, which is currently the case.
+* The current maximum is 63742 for 10-letter words. 
+* But this may change as more words are added in the future.
+*
 * buffers for OPEN MLI call (1024 bytes) : $8400 (index files) and $8800 (words files) 
 *
 ********************  main program  ***********************
@@ -174,6 +184,7 @@ init
 
 *<sym>
 exit2   rts             ; end of program
+
 *<sym>
 okpat   cr
         cr
@@ -192,8 +203,6 @@ okpat   cr
 
         lda #4          ; set top margin to 4 
         sta wndtop
-
-
                         ; set progressbar division
                         ; divide #36 by word length
                         ; to set progressbar increment.
@@ -297,8 +306,6 @@ bigloop lda #$01
         clc
         jsr fillmem     ; fill bitmap1 ($2000-$3FFF) with $ff
                         ; fill bitmap2 ($4000-$5FFF) with $00
-
-*<bp>
 *<sym>
 bigll   
         lda noletter    ; letter in pattern ?
@@ -405,6 +412,7 @@ clearbmp1
         cmp #>bitmap2
         bne clearbmp1
         rts                     ; and return
+
 
 *<sym>
 ok1     
@@ -831,7 +839,7 @@ l1      lda path,x
 good1   
         rts
 *
-        put bigdisplay.S
+        put bigdisplay          ; code for found words printing
 
 ********************  disconnect /RAM  **********************
 * from : https://prodos8.com/docs/techref/writing-a-prodos-system-program/
@@ -1075,6 +1083,8 @@ d1_param                ; GET_EOF
 refd1   hex 00
 *<sym>
 filelength      ds 3
+*<sym>
+max             ds 2    ; adress of last byte to analyse (+1) = $2000 + filelength
 
 *********************** vars ***********************
 *<sym>
@@ -1136,7 +1146,7 @@ patlib          str 'Pattern : '
 *<sym>
 seplib          str ' : '
 *<sym>
-titlelib        asc ' C R O S S W ? R D   S O L V E R (v. 2.1 - French - ODS9++)'
+titlelib        asc ' C R O S S W ? R D   S O L V E R (v. 2.1.1 - French - ODS9++)'
                 hex 00
 
 *<sym>
