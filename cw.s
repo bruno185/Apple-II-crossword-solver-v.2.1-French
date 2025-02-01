@@ -445,6 +445,7 @@ okread
 *<sym>
 okclose                 ; 
         sec 
+*<bp>
         jsr doand2       ; AND $2000 and $4000 areas 
         rts
 * end of dofile
@@ -507,7 +508,6 @@ noincp1
         rts
 
 ******************* AND *******************
-
 *<sym>
 doand2                   ; AND bitmap1 and bitmap2 memory areas 
         lda #<bitmap1   ; set bitamp1 address in ptr1 
@@ -539,6 +539,35 @@ andloop2
 * NB : all "area" is ANDed ($2000 byte long). it is more 
 * than actual index size (wich is obtained by get_eof in bigloop)
 * TODO : test if a partial AND is faster
+
+*<sym>
+doandloop
+*<sym>
+loadbyte
+        lda $2000
+*<sym>
+andbyte
+        and $4000
+*<sym>
+savebyte
+        sta $2000
+
+        inc loadbyte+1
+        bne :1
+        inc loadbyte+2
+        inc andbyte+2
+        inc savebyte+2
+:1
+        inc andbyte+1
+        inc savebyte+1
+
+        lda loadbyte+1
+        cmp max
+        bne doandloop
+        lda loadbyte+2 
+        cmp max+1
+        bne doandloop
+        rts
 
 ************** readindex **************
 *<sym>
@@ -950,17 +979,17 @@ exit    lda ramslot     ; save slot 3, drive 2 device address.
  *
  *<sym>
 done    plp             ; restore status
- *
         rts             ; and return
- *
- *<sym>
+*
+*
+**********************   DATA  **********************
+*
+*<sym>
 address dw $0000      ; store the device driver address here
 *<sym>
 ramunitid dfb $00     ; store the device's unit number here
-
-
-**********************   DATA  **********************
-
+*
+*
 *********** MLI call parameters ***********
 *<sym>
 quit_parms              ; QUIT call

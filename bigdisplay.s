@@ -50,7 +50,6 @@ savref  lda ref
         lda #<bitmap1
         sta ptr1
 
-*<bp>
 *<sym>
 loopreadbyte
         jsr setmax      ; v2.1.1 : set maximum adresse of last byte to analyse (= $2000 + filelength)
@@ -178,8 +177,6 @@ eoword3
         inc ptr1                ; inc. pointer to next byte to analyse
         bne noinc2
         inc ptr1+1
-
-*<bp>
 *<sym>
 noinc2 
                                 ; v2.1.1 french
