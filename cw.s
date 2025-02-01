@@ -540,35 +540,6 @@ andloop2
 * than actual index size (wich is obtained by get_eof in bigloop)
 * TODO : test if a partial AND is faster
 
-*<sym>
-doandloop
-*<sym>
-loadbyte
-        lda $2000
-*<sym>
-andbyte
-        and $4000
-*<sym>
-savebyte
-        sta $2000
-
-        inc loadbyte+1
-        bne :1
-        inc loadbyte+2
-        inc andbyte+2
-        inc savebyte+2
-:1
-        inc andbyte+1
-        inc savebyte+1
-
-        lda loadbyte+1
-        cmp max
-        bne doandloop
-        lda loadbyte+2 
-        cmp max+1
-        bne doandloop
-        rts
-
 ************** readindex **************
 *<sym>
 readindex               ; read index file 
