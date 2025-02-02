@@ -1,5 +1,5 @@
-bp 129C
 m1 13D8
+m2 1954
 sym ozunid_1 = 1000
 sym init = 1007
 sym exit2 = 10B7

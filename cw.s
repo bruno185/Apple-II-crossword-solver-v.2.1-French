@@ -2,18 +2,26 @@
 *   crossword solver   * 
 ************************
 * \
-* Purpose : make fast search in a 400000++  french words list, using patterns
+* Purpose : perform fast searches in a list of over 400 000 French words using patterns
 * Uses special bitmap index files.
 *
+* Main program flow:
+* 1. Initialize variables and clear screen.
+* 2. Accept user input for a pattern.
+* 3. Validate the input.
+* 4. Process the pattern to search for matching words.
+* 5. Display results and return to the initial state.
+*
 * History :
-* version 1.0 : uses tempo files 
-* version 1.1 : get rid of tempo files, works in memory mostly.
+* version 1.0 : uses temporary files 
+* version 1.1 : remove temporary files, now operates primarily in memory
 * version 1.2 : add a progress bar
 * version 1.4 : 
 * => new word file (ods8) 402328 words <= 15 chars, + 3 words : AIRIAL, AIRIAUX, BRIC)
 * => page stop (wait a key, or esc. to abort).
 * version 2.0 : split dictionary and indexes by word length
-* => now indexes don't need to be run length encoded, nor they need to be splited in 4 parts.
+* => now indexes are smaller, they don't need to be run length encoded, 
+* nor they need to be split in 4 parts.
 
 * version 2.1 french : 
 * => now include Officiel du Scrabble 9 (2024) with new words. 
@@ -23,9 +31,10 @@
 * => better comments
 *
 * version 2.1.1 french : 
-* analysis of bytes resulting from ANDing index files 
+* => analysis of bytes resulting from the AND operation on index files
 * is now limited to the strict number required (= length of index file). 
-* In previous versions, a memory area of 4kb was analyzed (from $2000 to $3FFF).
+* In previous versions, a memory area of 8kb was analyzed (from $2000 to $3FFF).
+* => english comments revised and enhanced by ChatGPT
 *
 ********************  memory org.  ***********************
 * Dictionary : 407192 words (402328 words in ODS8)
@@ -34,12 +43,13 @@
 * program : $1000 to $1FFF 
 * bitmap1 : $2000 -> $3FFF  
 * bitmap2 : $4000 -> $5FFF
-* WARNING: these 4 kB memory areas are suitable for a maximum number of 65536 words
+* WARNING: these 8 kB memory areas are suitable for a maximum number of 65536 words
 * of the same length, which is currently the case.
 * The current maximum is 63742 for 10-letter words. 
 * But this may change as more words are added in the future.
 *
 * buffers for OPEN MLI call (1024 bytes) : $8400 (index files) and $8800 (words files) 
+*
 *
 *
 *
@@ -54,7 +64,7 @@
 *<sym>
 start   equ *
 
-        jsr doprefix    ; get prefix, set it if undefined
+        jsr doprefix    ; get prefix, define it if not already set
         cld
         jsr $C300       ; 80 col. (http://www.deater.net/weave/vmwprod/demos/sizecoding.html)
 *<sym>
@@ -69,12 +79,12 @@ init
         prnstr path     ; display prefix
         cr
         prnstr patternlib       ; print label 
-        jsr mygetln     ; let user type pattern
-        jsr testpat     ; test if letter(s) in pattern, set noletter var 
+        jsr mygetln     ; allow user to input pattern
+        jsr testpat     ; check if the pattern contains letters and set the 'noletter' var accordingly 
         lda quitflag    ; if ctrl-c or escape then quitflag > 0
         bne exit2       ; yes : exit program
         lda pattern     ; get pattern length
-        cmp #$02        ; pattern length msut be >= 2
+        cmp #$02        ; pattern length must be >= 2
         bpl okpat       ; pattern ok : process it
         cr              ; print return (macro)
         prnstr kopatlib ; wrong pattern, message and loop
@@ -112,7 +122,7 @@ dosub   inc progdiv     ; inc division
         sec
         sbc draft
         bpl dosub
-        dec progdiv     ; adjut division
+        dec progdiv     ; adjust division
 *
 *
 ************ main loop for searching words ************
@@ -120,8 +130,8 @@ dosub   inc progdiv     ; inc division
 main
         closef #$00     ; close all files
         jsr FREEBUFR    ; free all buffers 
-        jsr bigloop     ; main program loop : porcess all letters of pattern
-        jsr bigdisplay  ; prints found words 
+        jsr bigloop     ; main loop : process letters of the pattern
+        jsr bigdisplay  ; print found words 
         jsr progressbarfin      ; print last chars (-) of progressbar
         jsr showres     ; show final result (count)
 *<sym>
@@ -136,7 +146,7 @@ eop     jsr dowait      ; wait for a pressed key
 
 
 *<sym>
-progressbar             ; display a progreeebar while procesing index
+progressbar             ; display a progress bar while procesing index
         lda #pbline     ; get line # for progressbar
         jsr bascalc     ; get base address 
         lda pbpos       ; get last h position
@@ -199,7 +209,7 @@ pbexit2 sta $C001       ; 80store off
         rts
 
 *************************************
-* main program loop : porcess all letters of pattern
+* main program loop : process all letters of pattern
 *<sym>
 bigloop lda #$01
         sta pos         ; position in pattern = 1
@@ -343,8 +353,7 @@ okread
         jmp ko
 *<sym>
 okclose                 ; 
-        sec 
-*<bp>
+        sec
         jsr doand2       ; AND $2000 and $4000 areas 
         rts
 * end of dofile
@@ -667,7 +676,7 @@ rslt    lda rdbuff,x
         ;ora #$80               ; inverse video 
         jsr cout
         inx 
-        cpx #reclength          ; no more then record length
+        cpx #reclength          ; no more than record length
         bne rslt
 *<sym>
 finres  rts
@@ -872,6 +881,7 @@ d1_param                ; GET_EOF
         hex 02
 *<sym>
 refd1   hex 00
+*<m2>
 *<sym>
 filelength      ds 3
 *<sym>
