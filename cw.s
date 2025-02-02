@@ -41,123 +41,22 @@
 *
 * buffers for OPEN MLI call (1024 bytes) : $8400 (index files) and $8800 (words files) 
 *
-********************  main program  ***********************
-
-* MLI calls (ProDOS)
-MLI             equ $BF00
-create          equ $C0
-destroy         equ $C1
-online          equ $C5
-getprefix       equ $c7
-setprefix       equ $c6
-open            equ $C8
-close           equ $CC
-read            equ $CA
-write           equ $CB
-setmark         equ $ce
-geteof          equ $d1 
-quit            equ $65
 *
-* ProDOS
-GETBUFR         equ $bef5
-FREEBUFR        equ $BEF8 
-devnum          equ $BF30   ; last used device here, format : DSSS0000 
-RSHIMEM         equ $BEFB
 *
-* ROM routines
-home            equ $FC58
-text            equ $FB2F
-;cout            equ $FDF0
-cout            equ $FDED
-vtab            equ $FC22
-getln           equ $FD6A
-getlnz          equ $FD67       ; = return + getln
-getln1          equ $FD6F       ; = getln without prompt 
-bascalc         equ $FBC1
-crout           equ $FD8E     ; print carriage return 
-clreop          equ $FC42     ; clear from cursor to end of page
-clreol          equ $FC9C     ; clear from cursor to end of line
-xtohex          equ $F944
-rdkey           equ $FD0C     ; wait for keypress
-printhex        equ $FDDA
-AUXMOV          equ $C311
-OUTPORT         equ $FE95
-*
-* ROM switches
-RAMWRTOFF       equ $C004       ; write to main
-RAMWRTON        equ $C005       ; write to aux
-RAMRDON         equ $C003       ; read aux 
-RAMRDOFF        equ $C002       ; read main
-ALTCHARSET0FF   equ $C00E 
-ALTCHARSET0N    equ $C00F
-kbd             equ $C000
-kbdstrb         equ $C010
-col80off        equ $C00C
-col80on         equ $C00D
-80col           equ $C01F 	 
-*
-* page 0
-cv              equ $25
-ch              equ $24 
-basl            equ $28
-wndlft          equ $20
-wndwdth         equ $21
-wndtop          equ $22         ; Top Margin (0 - 23, 0 is default, 20 in graphics mode)
-wndbtm          equ $23 
-prompt          equ $33
-*
-ourch           equ $57B      ; Cursor's column position minus 1 (HTAB's place) in 80-column mode
-ourcv           equ $5FB      ; 80 col vertical pos
-*
-****** FP routines ******
-float   equ $E2F2       ; Converts SIGNED integer in A/Y (high/lo) into FAC 
-PRNTFAC equ $ED2E       ; Prints number in FAC (in decimal format). FAC is destroyed
-FIN     equ $EC4A       ; FAC = expression pointee par TXTPTR
-FNEG    equ $EED0       ; FAC = - FAC
-FABS    equ $EBAF       ; FAC = ABS(FAC)
-F2INT16 equ $E752       ; FAC to 16 bits int in A/Y and $50/51 (low/high)
-FADD    equ $E7BE       ; FAC = FAC + ARG 
-FSUBT   equ $E7AA       ; FAC = FAC - ARG
-FMULT   equ $E97F       ; Move the number pointed by Y,A into ARG and fall into FMULTT 
-FMULTT  equ $E982       ; FAC = FAC x ARG
-FDIVT   equ $EA69       ; FAC = FAC / ARG
-RND     equ $EFAE       ; FAC = random number
-FOUT    equ $ED34       ; Create a string at the start of the stack ($100−$110)
-MOVAF   equ $EB63       ; Move FAC into ARG. On exit A=FACEXP and Z is set
-CONINT  equ $E6FB       ; Convert FAC into a single byte number in X and FACLO
-YTOFAC  equ $E301       ; Float y 
-MOVMF   equ $EB2B       ; Routine to pack FP number. Address of destination must be in Y
-                        ; (high) and X (low). Result is packed from FAC
-QUINT   equ $EBF2       ; convert fac to 16bit INT at $A0 and $A1
-STROUT  equ $DB3A       ; 
-LINPRT  equ $ED24       ; Converts the unsigned hexadecimal number in X (low) and A (high) into a decimal number and displays it.
-*
-***********************    my equ  ***********************
-bitmap1  equ $2000      ; $2000 -> $5FFF (bitmap index 1) => aux mem.
-bitmap2  equ $4000      ; $6000 -> $9FFF (bitmap index 2) => aux mem.
-
-ptr1     equ $06        ;
-ptr2     equ $08
-reclength equ $10       ; length of record in words file
-pbline  equ $03         ; # of text line for progressbar
-pbchar  equ #'-'        ; char for progressbar
-pbora   equ #$80        ; char bit 7 for progressbar
-
-
 ********************************************************************
 *                             P R O G R A M                        *
 ********************************************************************
-        MX %11
-        put mac.s
+        MX %11          ; for Merlin : A, X, Y 8 bits
+        put mac.s       ; macros
+        put equ.s       ; equates
         org $1000
 
 *<sym>
 start   equ *
 
-        jsr doprefix    ; set prefix
+        jsr doprefix    ; get prefix, set it if undefined
         cld
         jsr $C300       ; 80 col. (http://www.deater.net/weave/vmwprod/demos/sizecoding.html)
-
 *<sym>
 init   
         jsr text        ; init text mode, clear margins
@@ -176,8 +75,8 @@ init
         bne exit2       ; yes : exit program
         lda pattern     ; get pattern length
         cmp #$02        ; pattern length msut be >= 2
-        bpl okpat
-        cr
+        bpl okpat       ; pattern ok : process it
+        cr              ; print return (macro)
         prnstr kopatlib ; wrong pattern, message and loop
         jsr dowait      ; wait for a key pressed
         jmp init        ; goto beginning
@@ -186,17 +85,14 @@ init
 exit2   rts             ; end of program
 
 *<sym>
-okpat   cr
+okpat   cr              ; process pattern
         cr
-*
 ********************  init vars **********************
 
         lda #$00        ; init. total counter (sum of counters for 4 parts, 3 bytes integer)
-        
-        sta wordscnt     ; init. word counter to 0 (3 bytes integer)
+        sta wordscnt    ; init. word counter to 0 (3 bytes integer)
         sta wordscnt+1
         sta wordscnt+2
-
         sta col         ; init. horiz. position of resulting words 
         sta pbpos       ; init. progressbar in position 0
         sta displayed   ; 0 words displayed for now
@@ -217,23 +113,27 @@ dosub   inc progdiv     ; inc division
         sbc draft
         bpl dosub
         dec progdiv     ; adjut division
-
-******************** main loop for searching words **********************
+*
+*
+************ main loop for searching words ************
 *<sym>
-main    
+main
         closef #$00     ; close all files
         jsr FREEBUFR    ; free all buffers 
         jsr bigloop     ; main program loop : porcess all letters of pattern
         jsr bigdisplay  ; prints found words 
         jsr progressbarfin      ; print last chars (-) of progressbar
         jsr showres     ; show final result (count)
-
 *<sym>
 eop     jsr dowait      ; wait for a pressed key 
         closef #$00     ; close all files 
         jsr FREEBUFR    ; free all buffers
         jmp init        ; loop to the beginning
+*
 ******************** main program end ********************
+*
+*
+
 
 *<sym>
 progressbar             ; display a progreeebar while procesing index
@@ -294,12 +194,12 @@ ploop2
         cpx #40
         beq pbexit2     ; end : exit
         jmp ploop2      ; go on
-
 *<sym>
 pbexit2 sta $C001       ; 80store off
         rts
 
 *************************************
+* main program loop : porcess all letters of pattern
 *<sym>
 bigloop lda #$01
         sta pos         ; position in pattern = 1
@@ -308,9 +208,9 @@ bigloop lda #$01
                         ; fill bitmap2 ($4000-$5FFF) with $00
 *<sym>
 bigll   
-        lda noletter    ; letter in pattern ?
-        bne dolong      ; no : jump to length index process
-                        ; yes : search (full process)
+        lda noletter    ; just "?" chars in pattern flag (no a-z A-Z)
+        bne dolong      ; yes : jump to length index process
+                        ; no : search (full process)
         ldx pos         ; x =  position in pattern
         dex             ; adjust (x must start from 0, pos start from 1)
         lda pattern+1,x ; get char from pattern
@@ -369,7 +269,6 @@ showres
         sta cv
         sta ourcv 
         jsr vtab
-        ;cr
         lda #$00
         sta ch
         sta ourch
@@ -430,7 +329,7 @@ eofok
         jsr readindex   ; prepare loading of index file (set ID, req. length, etc.)
         jsr MLI         ; load file in main memory
         dfb read
-        da  ca_parms
+        da  ca_parms    ; load file at bitmap2 address
         bcc okread
         jmp ko
 *<sym>
@@ -509,7 +408,7 @@ noincp1
 
 ******************* AND *******************
 *<sym>
-doand2                   ; AND bitmap1 and bitmap2 memory areas 
+doand2                  ; AND bitmap1 and bitmap2 memory areas 
         lda #<bitmap1   ; set bitamp1 address in ptr1 
         sta ptr1
         lda #>bitmap1
@@ -541,6 +440,7 @@ andloop2
 * TODO : test if a partial AND is faster
 
 ************** readindex **************
+* Prepare loading of index file 
 *<sym>
 readindex               ; read index file 
         lda ref         ; get file ref id
@@ -557,9 +457,10 @@ readindex               ; read index file
         sta rreq+1
         rts
 *
+************** Read user input of a pattern **************
 *<sym>
 mygetln                 ; to let user input pattern 
-                        ; takes juste upper letters ans ?
+                        ; takes upper and lower case letters and ? (? = any letter)
                         ; ctrl-c or escape : exit
                         ; return : commit
                         ; delete : delete last char
@@ -662,6 +563,8 @@ noletter ds 1
 *
 *<sym>
 fillmem
+        ; fill bitmap1 ($2000-$3FFF) with $ff
+        ; fill bitmap2 ($4000-$5FFF) with $00
         lda #<bitmap1   ; set bitamp1 address in ptr2 (destination)
         sta ptr2
         lda #>bitmap1
@@ -720,14 +623,14 @@ interpret
         rts
 *<sym>
 print24bits
-* prints 3 bytes integer in counter/counter+1/counter+2
+* prints to screen a 3 bytes integer in counter/counter+1/counter+2
 * counter+2 must be positive
 
-        lda counter+2        ; init fac with filelength+1/filelength+2
-        ldy counter+1        ;
+        lda counter+2           ; init fac with filelength+1/filelength+2
+        ldy counter+1
         jsr float               ; convert integer to fac
         jsr mult256             ; * 256
-        lda counter          ; add filelength
+        lda counter             ; add filelength
         jsr dodadd
         jsr PRNTFAC
         rts
@@ -772,10 +675,10 @@ finres  rts
 *********** Error processing ***********
 *<sym>
 ko      pha             ; save error code
-        prnstr kolib
-        pla
+        prnstr kolib    ; print error message
+        pla             ; restore error code
         tax
-        jsr xtohex
+        jsr xtohex      ; print error code
         cr
         rts
 
@@ -788,6 +691,7 @@ dowait
         rts
 *
 *********** PREFIX *************
+* get current prefix
 *<sym>
 doprefix
         jsr MLI           ; getprefix, prefix ==> "path"
@@ -795,13 +699,11 @@ doprefix
         da c7_param
         bcc suitegp
         jmp ko 
-
 *<sym>
 suitegp
         lda path        ; 1st char = length
         beq noprefix    ; if 0 => no prefix
         jmp good1       ; else prefix already set, exit 
-
 *<sym>
 noprefix
         lda devnum      ; last used slot/drive 
@@ -812,7 +714,6 @@ men     jsr MLI
         da c5_param
         bcc suite
         jmp ko
-
 *<sym>
 suite   lda path
         and #$0f       ; length in low nibble
@@ -829,7 +730,6 @@ l1      lda path,x
         lda #$af       ; = '/'
         sta path,x     ; / after
         sta path+1     ; and / before
-
         jsr MLI        ; set_prefix
         dfb setprefix
         da c6_param
@@ -839,118 +739,9 @@ l1      lda path,x
 good1   
         rts
 *
-        put bigdisplay          ; code for found words printing
-
-********************  disconnect /RAM  **********************
-* from : https://prodos8.com/docs/techref/writing-a-prodos-system-program/
-* biblio :
-* https://www.brutaldeluxe.fr/products/france/psi/psi_systemeprodosdelappleii_ocr.pdf
-* or SYSTEME PRODOS DE L'APPLE Il.pdf p.139.
-
-*<sym>
-devcnt equ $bf31        ; global page device count
-*<sym>
-devlst equ $bf32        ; global page device list
-*<sym>
-machid equ $bf98        ; global page machine id byte
-*<sym>
-ramslot equ $bf26       ; slot 3, drive 2 is /ram's driver vector in following list :
-
-* ProDOS keeps a table of the addresses of the device drivers assigned to each slot and
-* drive between $BF10 and $BF2F. There are two bytes for each slot and drive. $BF10-1F
-* is for drive 1, and $BF20-2F is for drive 2. For example, the address of the device
-* driver for slot 6 drive 1 is at $BF1C,1D. (Normally this address is $D000.)
-
-*  BF10: Slot zero reserved
-*  BF12: Slot 1, drive 1
-*  BF14: Slot 2, drive 1
-*  BF16: Slot 3, drive 1
-*  BF18: Slot 4, drive 1
-*  BF1A: Slot 5, drive 1
-*  BF1C: Slot 6, drive 1
-*  BF1E: Slot 7, drive 1
-*  BF20: Slot zero reserved
-*  BF22: Slot 1, drive 2
-*  BF24: Slot 2, drive 2
-*  BF26: Slot 3, drive 2 = I RAM, reserved
-*  BF28: Slot 4, drive 2
-*  BF2A: Slot 5, drive 2
-*  BF2C: Slot 6, drive 2
-*  BF2E: Slot 7, drive 2
-
- * nodev is the global page slot zero, drive 1 disk drive vector.
- * it is reserved for use as the "no device connected" vector.
- *<sym>
-nodev equ $bf10
- *
- *<sym>
-ramout
-        php             ; save status and
-        sei             ; make sure interrupts are off!
- *
- * first thing to do is to see if there is a /ram to disconnect!
- *
-        lda machid      ; load the machine id byte
-        and #$30        ; to check for a 128k system
-        cmp #$30        ; is it 128k?
-        bne done        ; if not then branch since no /ram!
- *
-        lda ramslot     ; it is 128k; is a device there?
-        cmp nodev       ; compare with low byte of nodev
-        bne cont        ; branch if not equal, device is connected
-        lda ramslot+1   ; check high byte for match
-        cmp nodev+1     ; are we connected?
-        beq done        ; branch, no work to do; device not there
- *
- * at this point /ram (or some other device) is connected in
- * the slot 3, drive 2 vector.  now we must go thru the device
- * list and find the slot 3, drive 2 unit number of /ram ($bf).
- * the actual unit numbers, (that is to say 'devices') that will
- * be removed will be $bf, $bb, $b7, $b3.  /ram's device number
- * is $bf.  thus this convention will allow other devices that
- * do not necessarily resemble (or in fact, are completely different
- * from) /ram to remain intact in the system.
- *
- *<sym>
-cont ldy devcnt         ; get the number of devices online
-*<sym>
-loop lda devlst,y       ; start looking for /ram or facsimile
-        and #$f3        ; looking for $bf, $bb, $b7, $b3
-        cmp #$b3        ; is device number in {$bf,$bb,$b7,$b3}?
-        beq found       ; branch if found..
-        dey             ; otherwise check out the next unit #.
-        bpl loop        ; branch unless you've run out of units.
-        bmi done        ; since you have run out of units to
-*<sym>
-found lda devlst,y      ; get the original unit number back
-        sta ramunitid   ; and save it off for later restoration.
- *
- * now we must remove the unit from the device list by bubbling
- * up the trailing units.
- *
- *<sym>
-getloop 
-        lda devlst+1,y  ; get the next unit number
-        sta devlst,y    ; and move it up.
-        beq exit        ; branch when done(zeros trail the devlst)
-        iny             ; continue to the next unit number...
-        bne getloop     ; branch always.
- *
- *<sym>
-exit    lda ramslot     ; save slot 3, drive 2 device address.
-        sta address     ; save off low byte of /ram driver address
-        lda ramslot+1   ; save off high byte
-        sta address+1   ;
- *
-        lda nodev       ; finally copy the 'no device connected'
-        sta ramslot     ; into the slot 3, drive 2 vector and
-        lda nodev+1     
-        sta ramslot+1   
-        dec devcnt      ; decrement the device count.
- *
- *<sym>
-done    plp             ; restore status
-        rts             ; and return
+*
+        put bigdisplay.s        ; code for printing found words 
+        put ram.s               ; disconnect /RAM, not used for now.
 *
 *
 **********************   DATA  **********************
