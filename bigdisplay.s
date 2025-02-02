@@ -52,7 +52,9 @@ savref  lda ref
 
 *<sym>
 loopreadbyte
-        jsr setmax      ; v2.1.1 : set maximum adresse of last byte to analyse (= $2000 + filelength)
+        ;jsr setmax      ; v2.1.1 : set maximum adresse of last byte to analyse (= $2000 + filelength)
+        ; no longer needed, as setmex is already called in the countbit function  
+        ; at the beginning of bigdisplay.  
         ldy #$00
         lda (ptr1),y    ; get byte to process
         sta tempo

@@ -1,4 +1,4 @@
-# Apple II Crossword Solver  
+# Apple II Crossword Solver (v2.1.1)
 
 
 Voici un programme pour Apple II (e, c, GS) pour aider les cruciverbistes à trouver des mots.
@@ -58,6 +58,9 @@ Jusqu'à présent, il n'a pas été possible de faire générer le bon programme
 * Très grande efficacité de ce programme
 * Automatisation de la copie des fichiers index dans l'image disque par Cadius (cf. "do_index.bat")
 * Intégration de mon système de balisage du code source Merlin, pour bénéficier des symboles dans les débuggeur d'Applewin (cf. SetBreaks.cpp)
+
+## Les améliorations de la version 2.1.1 French
+* Amélioration significative des performances en ne traitant que l'espace mémoire nécessaire, et non l'ensemble des espaces de travail ($2000 à $3FFF et $4000 à $5FFF)
 
 ## Credits
 L'algorithme est celui utilisé dans le logiciel français « Easy Puss », pour ceux qui se souviennent de ce logiciel de base de données pour Apple II, publié dans les années 80 par l'éditeur de "4e Dimension". Il est appliqué aux lettres et à leurs positions dans le cas présent.

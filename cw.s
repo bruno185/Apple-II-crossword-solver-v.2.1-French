@@ -31,9 +31,11 @@
 * => better comments
 *
 * version 2.1.1 french : 
-* => analysis of bytes resulting from the AND operation on index files
-* is now limited to the strict number required (= length of index file). 
+* => the analysis of bytes resulting from the AND operation on index files 
+* is now strictly limited to the required number (= length of the index file).
 * In previous versions, a memory area of 8kb was analyzed (from $2000 to $3FFF).
+* the same optimization applies to bit counting.
+* 
 * => english comments revised and enhanced by ChatGPT
 *
 ********************  memory org.  ***********************
@@ -112,20 +114,19 @@ okpat   cr              ; process pattern
                         ; set progressbar division
                         ; divide #36 by word length
                         ; to set progressbar increment.
-        lda pattern     ; get word length 
-        sta draft       ; save it
         lda #$00 
         sta progdiv     ; init division = 0
         lda #36         ; 36 chars for index processing (= 72 chars in 80 col.)
 *<sym>
 dosub   inc progdiv     ; inc division
         sec
-        sbc draft
+        sbc pattern     ; substract word length 
         bpl dosub
         dec progdiv     ; adjust division
 *
 *
 ************ main loop for searching words ************
+*<bp>
 *<sym>
 main
         closef #$00     ; close all files
@@ -212,7 +213,7 @@ pbexit2 sta $C001       ; 80store off
 * main program loop : process all letters of pattern
 *<sym>
 bigloop lda #$01
-        sta pos         ; position in pattern = 1
+        sta pos         ; position in pattern = 1 (first char)
         clc
         jsr fillmem     ; fill bitmap1 ($2000-$3FFF) with $ff
                         ; fill bitmap2 ($4000-$5FFF) with $00
@@ -354,7 +355,7 @@ okread
 *<sym>
 okclose                 ; 
         sec
-        jsr doand2       ; AND $2000 and $4000 areas 
+        jsr doand3       ; AND $2000 and $4000 areas 
         rts
 * end of dofile
 
@@ -369,24 +370,27 @@ setopenbuffer           ; set buffer to $8400 for OPEN mli call
 * count bit set to 1 in index
 *<sym>
 countbit
-        lda #>bitmap1   ; set pointer to $2000 area
-        sta ptr1+1
-        lda #<bitmap1
-        sta ptr1
-        
+        jsr setmax
+        lda #<bitmap1   ; set pointer to $2000 area
+        sta ldb+1
+        lda #>bitmap1
+        sta ldb+2 
+
         lda #$00        ; init counter
         sta counter
         sta counter+1
         sta counter+2
 *<sym>
-loopcount
+lpcnt
         ldy #$00
-        lda (ptr1),y    ; get byte to read
+*<sym>
+ldb 
+        lda $2000       ; get byte to read
         beq updateptr   ; byte = $00 : loop
         ldx #$08        ; 8 bits to check
 *<sym>
 shift   lsr
-        bcc nocarry
+        bcc nocarry     ; bit = 0
         iny             ; y counts bits set to 1
 *<sym>
 nocarry dex
@@ -405,48 +409,65 @@ nocarry dex
         sta counter+2  
 *<sym>     
 updateptr    
-        inc ptr1        ; next byte to read
+        inc ldb+1        ; next byte to read
         bne noincp1
-        inc ptr1+1
+        inc ldb+2
 *<sym>
 noincp1
-        lda ptr1+1
-        cmp #$20+#$20        
-        bne loopcount
+        lda ldb+1
+        cmp max       
+        bne lpcnt
+        lda ldb+2
+        cmp max+1       
+        bne lpcnt
         rts
 
 ******************* AND *******************
+* v2.1.1 : now only the bytes needed are ANDed (and not $2000 to $3FFF) 
+* The length of the area ton AND is equal to the length of the index files 
+* for the current pattern
 *<sym>
-doand2                  ; AND bitmap1 and bitmap2 memory areas 
-        lda #<bitmap1   ; set bitamp1 address in ptr1 
-        sta ptr1
+doand3
+        jsr setmax
+        lda #<bitmap1   ; set bitamp1 address
+        sta loadbyte+1
+        sta savebyte+1
         lda #>bitmap1
-        sta ptr1+1 
-        lda #<bitmap2   ; set bitamp2 address in ptr2 
-        sta ptr2
+        sta loadbyte+2 
+        sta savebyte+2
+
+        lda #<bitmap2   ; set bitamp2 address
+        sta andbyte+1
         lda #>bitmap2
-        sta ptr2+1  
-        ldy #$00
+        sta andbyte+2 
 *<sym>
-andloop2
-        lda (ptr1),y    ; get byte from 1st area (bitmap1)
-        and (ptr2),y    ; and bye from 2nd area (bitmap2)
-        sta (ptr1),y    ; save result in 1st area (bitmap1)
+doandloop
+*<sym>
+loadbyte
+        lda $2000
+*<sym>
+andbyte
+        and $4000
+*<sym>
+savebyte
+        sta $2000
 
-        iny 
-        bne andloop2
+        inc loadbyte+1
+        bne :1
+        inc loadbyte+2
+        inc andbyte+2
+        inc savebyte+2
+:1
+        inc andbyte+1
+        inc savebyte+1
 
-        inc ptr1+1
-        inc ptr2+1
-
-        ldx ptr1+1
-        cpx #>bitmap2  ; ptr1 reached bitmap2
-        bne andloop2
+        lda loadbyte+1
+        cmp max
+        bne doandloop
+        lda loadbyte+2 
+        cmp max+1
+        bne doandloop
         rts
-
-* NB : all "area" is ANDed ($2000 byte long). it is more 
-* than actual index size (wich is obtained by get_eof in bigloop)
-* TODO : test if a partial AND is faster
 
 ************** readindex **************
 * Prepare loading of index file 
@@ -476,7 +497,6 @@ mygetln                 ; to let user input pattern
         lda #$00
         sta pattern     ; pattern length = 0
         sta quitflag
-
 *<sym>
 readkeyboard
         lda kbd         ; key keystroke
@@ -566,10 +586,10 @@ letterfound             ; set flag and exit
         sta noletter
         rts
 
-*<m1>
-*<sym>
-noletter ds 1
 *
+* Fill merory work area where the index files avec loaded and ANDed.
+* TODO: fill only the space required (= the length of the current index file). 
+* NB: but this function is currently called before the length of the index file is known.
 *<sym>
 fillmem
         ; fill bitmap1 ($2000-$3FFF) with $ff
@@ -750,7 +770,7 @@ good1
 *
 *
         put bigdisplay.s        ; code for printing found words 
-        put ram.s               ; disconnect /RAM, not used for now.
+        ;put ram.s               ; disconnect /RAM, not used for now.
 *
 *
 **********************   DATA  **********************
@@ -894,19 +914,16 @@ myfac   ds 6            ; to store tempo FAC
 counter hex 000000      ; store any counter here
 *<sym>
 wordscnt   hex 000000
+*<m1>
+*<sym>
+noletter ds 1
 
 *<sym>
 recnum  hex 000000
 *<sym>
 tempo   hex 0000
 *<sym>
-
-draft   hex 00
-*<sym>
 progdiv hex 00
-*<sym>
-
-
 *<sym>
 tohex   asc '0123456789ABCDEF'
 
