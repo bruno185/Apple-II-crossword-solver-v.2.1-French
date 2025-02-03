@@ -57,7 +57,7 @@ Jusqu'à présent, il n'a pas été possible de faire générer le bon programme
 * Génération des index par un programme python, lui-même généré par ChatGPT
 * Très grande efficacité de ce programme
 * Automatisation de la copie des fichiers index dans l'image disque par Cadius (cf. "do_index.bat")
-* Intégration de mon système de balisage du code source Merlin, pour bénéficier des symboles dans les débuggeur d'Applewin (cf. SetBreaks.cpp)
+* Intégration de mon système de balisage du code source Merlin, pour bénéficier des symboles dans le débuggeur d'Applewin (cf. SetBreaks.cpp)
 
 ## Les améliorations de la version 2.1.1 French
 * Amélioration significative des performances en ne traitant que l'espace mémoire nécessaire, et non l'ensemble des espaces de travail ($2000 à $3FFF et $4000 à $5FFF)
