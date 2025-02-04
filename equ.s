@@ -3,6 +3,7 @@
 * * * * * * * * * * * * * * * * * * * * * * 
 *
 * MLI calls (ProDOS)
+*<equ>
 MLI             equ $BF00
 create          equ $C0
 destroy         equ $C1

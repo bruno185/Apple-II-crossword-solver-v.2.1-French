@@ -96,6 +96,7 @@ init
 *<sym>
 exit2   rts             ; end of program
 
+*<bp>
 *<sym>
 okpat   cr              ; process pattern
         cr
@@ -126,7 +127,6 @@ dosub   inc progdiv     ; inc division
 *
 *
 ************ main loop for searching words ************
-*<bp>
 *<sym>
 main
         closef #$00     ; close all files
@@ -944,7 +944,6 @@ col     ds 1
 pbpos   ds 1
 *<sym>
 displayed ds 1
-*<sym>
 
 **** strings ****
 *<sym>
