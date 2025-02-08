@@ -226,7 +226,6 @@ setmax                  ; set adress of last byte to analyse
         sta max+1
         rts
 *<sym>
-
 incwrdcnt 
         inc wordscnt    ; inc word counter
         bne nowinc1

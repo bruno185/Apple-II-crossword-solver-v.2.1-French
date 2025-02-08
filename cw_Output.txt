@@ -1260,102 +1260,98 @@
  1260 |  4 bigdisplay.s    226 | Code        | 11 |         |    3 | 00/16B2 : 8D 2B 19    |                 sta     max+1          
  1261 |  4 bigdisplay.s    227 | Code        | 11 |         |    1 | 00/16B5 : 60          |                 rts                    
  1262 |  4 bigdisplay.s    228 | Comment     | 11 |         |    0 | 00/16B6               | *<sym>
- 1263 |  4 bigdisplay.s    229 | Empty       | 11 |         |    0 | 00/16B6               |                                        
- 1264 |  4 bigdisplay.s    230 | Empty       | 11 |         |    0 | 00/16B6               | incwrdcnt                              
- 1265 |  4 bigdisplay.s    231 | Code        | 11 |         |    3 | 00/16B6 : EE 35 19    |                 inc     wordscnt       ; inc word counter
- 1266 |  4 bigdisplay.s    232 | Code        | 11 |         |    2 | 00/16B9 : D0 03       |                 bne     nowinc1        
- 1267 |  4 bigdisplay.s    233 | Code        | 11 |         |    3 | 00/16BB : EE 36 19    |                 inc     wordscnt+1     
- 1268 |  4 bigdisplay.s    234 | Comment     | 11 |         |    0 | 00/16BE               | *<sym>
- 1269 |  4 bigdisplay.s    235 | Code        | 11 |         |    2 | 00/16BE : D0 03       | nowinc1         bne     incfin         
- 1270 |  4 bigdisplay.s    236 | Code        | 11 |         |    3 | 00/16C0 : EE 37 19    |                 inc     wordscnt+2     
- 1271 |  4 bigdisplay.s    237 | Comment     | 11 |         |    0 | 00/16C3               | *<sym>
- 1272 |  4 bigdisplay.s    238 | Code        | 11 |         |    1 | 00/16C3 : 60          | incfin          rts                    
- 1273 |  4 bigdisplay.s    239 | Empty       | 11 |         |    0 | 00/16C4               |                                        
- 1274 |  1         cw.s    773 | Comment     | 11 |         |    0 | 00/16C4               |         ;put ram.s               ; disconnect /RAM, not used for now.
- 1275 |  1         cw.s    774 | Comment     | 11 |         |    0 | 00/16C4               | *
- 1276 |  1         cw.s    775 | Comment     | 11 |         |    0 | 00/16C4               | *
- 1277 |  1         cw.s    776 | Comment     | 11 |         |    0 | 00/16C4               | **********************   DATA  **********************
- 1278 |  1         cw.s    777 | Comment     | 11 |         |    0 | 00/16C4               | *
- 1279 |  1         cw.s    778 | Comment     | 11 |         |    0 | 00/16C4               | *<sym>
- 1280 |  1         cw.s    779 | Data        | 11 |         |    2 | 00/16C4 : 00 00       | address         dw      $0000          ; store the device driver address here
- 1281 |  1         cw.s    780 | Comment     | 11 |         |    0 | 00/16C6               | *<sym>
- 1282 |  1         cw.s    781 | Data        | 11 |         |    1 | 00/16C6 : 00          | ramunitid       dfb     $00            ; store the device's unit number here
- 1283 |  1         cw.s    782 | Comment     | 11 |         |    0 | 00/16C7               | *
- 1284 |  1         cw.s    783 | Comment     | 11 |         |    0 | 00/16C7               | *
- 1285 |  1         cw.s    784 | Comment     | 11 |         |    0 | 00/16C7               | *********** MLI call parameters ***********
- 1286 |  1         cw.s    785 | Comment     | 11 |         |    0 | 00/16C7               | *<sym>
- 1287 |  1         cw.s    786 | Empty       | 11 |         |    0 | 00/16C7               | quit_parms                             ; QUIT call
- 1288 |  1         cw.s    787 | Data        | 11 |         |    1 | 00/16C7 : 04          |                 hex     04             
- 1289 |  1         cw.s    788 | Data        | 11 |         |    2 | 00/16C8 : 00 00       |                 hex     0000           
- 1290 |  1         cw.s    789 | Data        | 11 |         |    1 | 00/16CA : 00          |                 hex     00             
- 1291 |  1         cw.s    790 | Data        | 11 |         |    2 | 00/16CB : 00 00       |                 hex     0000           
- 1292 |  1         cw.s    791 | Comment     | 11 |         |    0 | 00/16CD               | *
- 1293 |  1         cw.s    792 | Comment     | 11 |         |    0 | 00/16CD               | *<sym>
- 1294 |  1         cw.s    793 | Empty       | 11 |         |    0 | 00/16CD               | c0_parms                               ; CREATE file
- 1295 |  1         cw.s    794 | Data        | 11 |         |    1 | 00/16CD : 07          |                 hex     07             
- 1296 |  1         cw.s    795 | Data        | 11 |         |    2 | 00/16CE : EC 16       |                 da      fname          ; path name (same as open)
- 1297 |  1         cw.s    796 | Data        | 11 |         |    1 | 00/16D0 : C3          |                 hex     C3             
- 1298 |  1         cw.s    797 | Data        | 11 |         |    1 | 00/16D1 : 00          |                 hex     00             
- 1299 |  1         cw.s    798 | Data        | 11 |         |    2 | 00/16D2 : 00 00       |                 hex     0000           
- 1300 |  1         cw.s    799 | Data        | 11 |         |    1 | 00/16D4 : 00          |                 hex     00             
- 1301 |  1         cw.s    800 | Data        | 11 |         |    2 | 00/16D5 : 00 00       |                 hex     0000           
- 1302 |  1         cw.s    801 | Data        | 11 |         |    2 | 00/16D7 : 00 00       |                 hex     0000           
- 1303 |  1         cw.s    802 | Comment     | 11 |         |    0 | 00/16D9               | *<sym>
- 1304 |  1         cw.s    803 | Empty       | 11 |         |    0 | 00/16D9               | cb_parms                               ; WRITE file
- 1305 |  1         cw.s    804 | Data        | 11 |         |    1 | 00/16D9 : 04          |                 hex     04             
- 1306 |  1         cw.s    805 | Comment     | 11 |         |    0 | 00/16DA               | *<sym>
- 1307 |  1         cw.s    806 | Data        | 11 |         |    1 | 00/16DA : 00          | refw            hex     00             
- 1308 |  1         cw.s    807 | Comment     | 11 |         |    0 | 00/16DB               | *<sym>
- 1309 |  1         cw.s    808 | Data        | 11 |         |    2 | 00/16DB : 00 20       | datab           hex     0020           
- 1310 |  1         cw.s    809 | Comment     | 11 |         |    0 | 00/16DD               | *<sym>
- 1311 |  1         cw.s    810 | Data        | 11 |         |    2 | 00/16DD : 27 2F       | lengw           hex     272F           
- 1312 |  1         cw.s    811 | Comment     | 11 |         |    0 | 00/16DF               | *<sym>
- 1313 |  1         cw.s    812 | Data        | 11 |         |    2 | 00/16DF : 00 00       |                 hex     0000           
- 1314 |  1         cw.s    813 | Empty       | 11 |         |    0 | 00/16E1               |                                        
- 1315 |  1         cw.s    814 | Comment     | 11 |         |    0 | 00/16E1               | *<sym>
- 1316 |  1         cw.s    815 | Empty       | 11 |         |    0 | 00/16E1               | c1_parms                               ; DESTROY file
- 1317 |  1         cw.s    816 | Data        | 11 |         |    1 | 00/16E1 : 01          |                 hex     01             
- 1318 |  1         cw.s    817 | Data        | 11 |         |    2 | 00/16E2 : EC 16       |                 da      fname          ; path name (same as open)
- 1319 |  1         cw.s    818 | Comment     | 11 |         |    0 | 00/16E4               | *<sym>
- 1320 |  1         cw.s    819 | Empty       | 11 |         |    0 | 00/16E4               | cc_parms                               ; CLOSE file
- 1321 |  1         cw.s    820 | Data        | 11 |         |    1 | 00/16E4 : 01          |                 hex     01             ; number of params.
- 1322 |  1         cw.s    821 | Data        | 11 |         |    1 | 00/16E5 : 00          |                 hex     00             
- 1323 |  1         cw.s    822 | Comment     | 11 |         |    0 | 00/16E6               | *<sym>
- 1324 |  1         cw.s    823 | Empty       | 11 |         |    0 | 00/16E6               | c8_parms                               ; OPEN file for reading
- 1325 |  1         cw.s    824 | Data        | 11 |         |    1 | 00/16E6 : 03          |                 hex     03             ; number of params.
- 1326 |  1         cw.s    825 | Data        | 11 |         |    2 | 00/16E7 : EC 16       |                 da      fname          ; path name
- 1327 |  1         cw.s    826 | Comment     | 11 |         |    0 | 00/16E9               | *<sym>
- 1328 |  1         cw.s    827 | Data        | 11 |         |    2 | 00/16E9 : 00 00       | fbuff           hex     0000           
- 1329 |  1         cw.s    828 | Comment     | 11 |         |    0 | 00/16EB               | *<sym>
- 1330 |  1         cw.s    829 | Data        | 11 |         |    1 | 00/16EB : 00          | ref             hex     00             ; ref ID
- 1331 |  1         cw.s    830 | Comment     | 11 |         |    0 | 00/16EC               | *<sym>
- 1332 |  1         cw.s    831 | Data        | 11 |         |   16 | 00/16EC : 00 00 00 00 | fname           ds      16             
+ 1263 |  4 bigdisplay.s    229 | Empty       | 11 |         |    0 | 00/16B6               | incwrdcnt                              
+ 1264 |  4 bigdisplay.s    230 | Code        | 11 |         |    3 | 00/16B6 : EE 35 19    |                 inc     wordscnt       ; inc word counter
+ 1265 |  4 bigdisplay.s    231 | Code        | 11 |         |    2 | 00/16B9 : D0 03       |                 bne     nowinc1        
+ 1266 |  4 bigdisplay.s    232 | Code        | 11 |         |    3 | 00/16BB : EE 36 19    |                 inc     wordscnt+1     
+ 1267 |  4 bigdisplay.s    233 | Comment     | 11 |         |    0 | 00/16BE               | *<sym>
+ 1268 |  4 bigdisplay.s    234 | Code        | 11 |         |    2 | 00/16BE : D0 03       | nowinc1         bne     incfin         
+ 1269 |  4 bigdisplay.s    235 | Code        | 11 |         |    3 | 00/16C0 : EE 37 19    |                 inc     wordscnt+2     
+ 1270 |  4 bigdisplay.s    236 | Comment     | 11 |         |    0 | 00/16C3               | *<sym>
+ 1271 |  4 bigdisplay.s    237 | Code        | 11 |         |    1 | 00/16C3 : 60          | incfin          rts                    
+ 1272 |  4 bigdisplay.s    238 | Empty       | 11 |         |    0 | 00/16C4               |                                        
+ 1273 |  1         cw.s    773 | Comment     | 11 |         |    0 | 00/16C4               |         ;put ram.s               ; disconnect /RAM, not used for now.
+ 1274 |  1         cw.s    774 | Comment     | 11 |         |    0 | 00/16C4               | *
+ 1275 |  1         cw.s    775 | Comment     | 11 |         |    0 | 00/16C4               | *
+ 1276 |  1         cw.s    776 | Comment     | 11 |         |    0 | 00/16C4               | **********************   DATA  **********************
+ 1277 |  1         cw.s    777 | Comment     | 11 |         |    0 | 00/16C4               | *
+ 1278 |  1         cw.s    778 | Comment     | 11 |         |    0 | 00/16C4               | *<sym>
+ 1279 |  1         cw.s    779 | Data        | 11 |         |    2 | 00/16C4 : 00 00       | address         dw      $0000          ; store the device driver address here
+ 1280 |  1         cw.s    780 | Comment     | 11 |         |    0 | 00/16C6               | *<sym>
+ 1281 |  1         cw.s    781 | Data        | 11 |         |    1 | 00/16C6 : 00          | ramunitid       dfb     $00            ; store the device's unit number here
+ 1282 |  1         cw.s    782 | Comment     | 11 |         |    0 | 00/16C7               | *
+ 1283 |  1         cw.s    783 | Comment     | 11 |         |    0 | 00/16C7               | *
+ 1284 |  1         cw.s    784 | Comment     | 11 |         |    0 | 00/16C7               | *********** MLI call parameters ***********
+ 1285 |  1         cw.s    785 | Comment     | 11 |         |    0 | 00/16C7               | *<sym>
+ 1286 |  1         cw.s    786 | Empty       | 11 |         |    0 | 00/16C7               | quit_parms                             ; QUIT call
+ 1287 |  1         cw.s    787 | Data        | 11 |         |    1 | 00/16C7 : 04          |                 hex     04             
+ 1288 |  1         cw.s    788 | Data        | 11 |         |    2 | 00/16C8 : 00 00       |                 hex     0000           
+ 1289 |  1         cw.s    789 | Data        | 11 |         |    1 | 00/16CA : 00          |                 hex     00             
+ 1290 |  1         cw.s    790 | Data        | 11 |         |    2 | 00/16CB : 00 00       |                 hex     0000           
+ 1291 |  1         cw.s    791 | Comment     | 11 |         |    0 | 00/16CD               | *
+ 1292 |  1         cw.s    792 | Comment     | 11 |         |    0 | 00/16CD               | *<sym>
+ 1293 |  1         cw.s    793 | Empty       | 11 |         |    0 | 00/16CD               | c0_parms                               ; CREATE file
+ 1294 |  1         cw.s    794 | Data        | 11 |         |    1 | 00/16CD : 07          |                 hex     07             
+ 1295 |  1         cw.s    795 | Data        | 11 |         |    2 | 00/16CE : EC 16       |                 da      fname          ; path name (same as open)
+ 1296 |  1         cw.s    796 | Data        | 11 |         |    1 | 00/16D0 : C3          |                 hex     C3             
+ 1297 |  1         cw.s    797 | Data        | 11 |         |    1 | 00/16D1 : 00          |                 hex     00             
+ 1298 |  1         cw.s    798 | Data        | 11 |         |    2 | 00/16D2 : 00 00       |                 hex     0000           
+ 1299 |  1         cw.s    799 | Data        | 11 |         |    1 | 00/16D4 : 00          |                 hex     00             
+ 1300 |  1         cw.s    800 | Data        | 11 |         |    2 | 00/16D5 : 00 00       |                 hex     0000           
+ 1301 |  1         cw.s    801 | Data        | 11 |         |    2 | 00/16D7 : 00 00       |                 hex     0000           
+ 1302 |  1         cw.s    802 | Comment     | 11 |         |    0 | 00/16D9               | *<sym>
+ 1303 |  1         cw.s    803 | Empty       | 11 |         |    0 | 00/16D9               | cb_parms                               ; WRITE file
+ 1304 |  1         cw.s    804 | Data        | 11 |         |    1 | 00/16D9 : 04          |                 hex     04             
+ 1305 |  1         cw.s    805 | Comment     | 11 |         |    0 | 00/16DA               | *<sym>
+ 1306 |  1         cw.s    806 | Data        | 11 |         |    1 | 00/16DA : 00          | refw            hex     00             
+ 1307 |  1         cw.s    807 | Comment     | 11 |         |    0 | 00/16DB               | *<sym>
+ 1308 |  1         cw.s    808 | Data        | 11 |         |    2 | 00/16DB : 00 20       | datab           hex     0020           
+ 1309 |  1         cw.s    809 | Comment     | 11 |         |    0 | 00/16DD               | *<sym>
+ 1310 |  1         cw.s    810 | Data        | 11 |         |    2 | 00/16DD : 27 2F       | lengw           hex     272F           
+ 1311 |  1         cw.s    811 | Data        | 11 |         |    2 | 00/16DF : 00 00       |                 hex     0000           
+ 1312 |  1         cw.s    812 | Comment     | 11 |         |    0 | 00/16E1               | *<sym>
+ 1313 |  1         cw.s    813 | Empty       | 11 |         |    0 | 00/16E1               | c1_parms                               ; DESTROY file
+ 1314 |  1         cw.s    814 | Data        | 11 |         |    1 | 00/16E1 : 01          |                 hex     01             
+ 1315 |  1         cw.s    815 | Data        | 11 |         |    2 | 00/16E2 : EC 16       |                 da      fname          ; path name (same as open)
+ 1316 |  1         cw.s    816 | Comment     | 11 |         |    0 | 00/16E4               | *<sym>
+ 1317 |  1         cw.s    817 | Empty       | 11 |         |    0 | 00/16E4               | cc_parms                               ; CLOSE file
+ 1318 |  1         cw.s    818 | Data        | 11 |         |    1 | 00/16E4 : 01          |                 hex     01             ; number of params.
+ 1319 |  1         cw.s    819 | Data        | 11 |         |    1 | 00/16E5 : 00          |                 hex     00             
+ 1320 |  1         cw.s    820 | Comment     | 11 |         |    0 | 00/16E6               | *<sym>
+ 1321 |  1         cw.s    821 | Empty       | 11 |         |    0 | 00/16E6               | c8_parms                               ; OPEN file for reading
+ 1322 |  1         cw.s    822 | Data        | 11 |         |    1 | 00/16E6 : 03          |                 hex     03             ; number of params.
+ 1323 |  1         cw.s    823 | Data        | 11 |         |    2 | 00/16E7 : EC 16       |                 da      fname          ; path name
+ 1324 |  1         cw.s    824 | Comment     | 11 |         |    0 | 00/16E9               | *<sym>
+ 1325 |  1         cw.s    825 | Data        | 11 |         |    2 | 00/16E9 : 00 00       | fbuff           hex     0000           
+ 1326 |  1         cw.s    826 | Comment     | 11 |         |    0 | 00/16EB               | *<sym>
+ 1327 |  1         cw.s    827 | Data        | 11 |         |    1 | 00/16EB : 00          | ref             hex     00             ; ref ID
+ 1328 |  1         cw.s    828 | Comment     | 11 |         |    0 | 00/16EC               | *<sym>
+ 1329 |  1         cw.s    829 | Data        | 11 |         |   16 | 00/16EC : 00 00 00 00 | fname           ds      16             
       |                        |             |    |         |      |           00 00 00 00 |
       |                        |             |    |         |      |           00 00 00 00 |
       |                        |             |    |         |      |           00 00 00 00 |
- 1333 |  1         cw.s    832 | Comment     | 11 |         |    0 | 00/16FC               | *
- 1334 |  1         cw.s    833 | Comment     | 11 |         |    0 | 00/16FC               | *<sym>
- 1335 |  1         cw.s    834 | Empty       | 11 |         |    0 | 00/16FC               | ce_param                               ; SET_MARK
- 1336 |  1         cw.s    835 | Data        | 11 |         |    1 | 00/16FC : 02          |                 hex     02             ; number of params.
- 1337 |  1         cw.s    836 | Comment     | 11 |         |    0 | 00/16FD               | *<sym>
- 1338 |  1         cw.s    837 | Data        | 11 |         |    1 | 00/16FD : 00          | refce           hex     00             ; ref ID
- 1339 |  1         cw.s    838 | Comment     | 11 |         |    0 | 00/16FE               | *<sym>
- 1340 |  1         cw.s    839 | Data        | 11 |         |    3 | 00/16FE : 00 00 00    | filepos         hex     000000         ; new file position
- 1341 |  1         cw.s    840 | Comment     | 11 |         |    0 | 00/1701               | *
- 1342 |  1         cw.s    841 | Comment     | 11 |         |    0 | 00/1701               | *<sym>
- 1343 |  1         cw.s    842 | Empty       | 11 |         |    0 | 00/1701               | ca_parms                               ; READ file
- 1344 |  1         cw.s    843 | Data        | 11 |         |    1 | 00/1701 : 04          |                 hex     04             ; number of params.
- 1345 |  1         cw.s    844 | Comment     | 11 |         |    0 | 00/1702               | *<sym>
- 1346 |  1         cw.s    845 | Data        | 11 |         |    1 | 00/1702 : 00          | refread         hex     00             ; ref #
- 1347 |  1         cw.s    846 | Comment     | 11 |         |    0 | 00/1703               | *<sym>
- 1348 |  1         cw.s    847 | Data        | 11 |         |    2 | 00/1703 : 09 17       | rdbuffa         da      rdbuff         
- 1349 |  1         cw.s    848 | Comment     | 11 |         |    0 | 00/1705               | *<sym>
- 1350 |  1         cw.s    849 | Data        | 11 |         |    2 | 00/1705 : 00 00       | rreq            hex     0000           ; bytes requested
- 1351 |  1         cw.s    850 | Comment     | 11 |         |    0 | 00/1707               | *<sym>
- 1352 |  1         cw.s    851 | Data        | 11 |         |    2 | 00/1707 : 00 00       | readlen         hex     0000           ; bytes read
- 1353 |  1         cw.s    852 | Comment     | 11 |         |    0 | 00/1709               | *<sym>
- 1354 |  1         cw.s    853 | Comment     | 11 |         |    0 | 00/1709               | *
- 1355 |  1         cw.s    854 | Data        | 11 |         |  256 | 00/1709 : 00 00 00 00 | rdbuff          ds      256            
+ 1330 |  1         cw.s    830 | Comment     | 11 |         |    0 | 00/16FC               | *
+ 1331 |  1         cw.s    831 | Comment     | 11 |         |    0 | 00/16FC               | *<sym>
+ 1332 |  1         cw.s    832 | Empty       | 11 |         |    0 | 00/16FC               | ce_param                               ; SET_MARK
+ 1333 |  1         cw.s    833 | Data        | 11 |         |    1 | 00/16FC : 02          |                 hex     02             ; number of params.
+ 1334 |  1         cw.s    834 | Comment     | 11 |         |    0 | 00/16FD               | *<sym>
+ 1335 |  1         cw.s    835 | Data        | 11 |         |    1 | 00/16FD : 00          | refce           hex     00             ; ref ID
+ 1336 |  1         cw.s    836 | Comment     | 11 |         |    0 | 00/16FE               | *<sym>
+ 1337 |  1         cw.s    837 | Data        | 11 |         |    3 | 00/16FE : 00 00 00    | filepos         hex     000000         ; new file position
+ 1338 |  1         cw.s    838 | Comment     | 11 |         |    0 | 00/1701               | *
+ 1339 |  1         cw.s    839 | Comment     | 11 |         |    0 | 00/1701               | *<sym>
+ 1340 |  1         cw.s    840 | Empty       | 11 |         |    0 | 00/1701               | ca_parms                               ; READ file
+ 1341 |  1         cw.s    841 | Data        | 11 |         |    1 | 00/1701 : 04          |                 hex     04             ; number of params.
+ 1342 |  1         cw.s    842 | Comment     | 11 |         |    0 | 00/1702               | *<sym>
+ 1343 |  1         cw.s    843 | Data        | 11 |         |    1 | 00/1702 : 00          | refread         hex     00             ; ref #
+ 1344 |  1         cw.s    844 | Comment     | 11 |         |    0 | 00/1703               | *<sym>
+ 1345 |  1         cw.s    845 | Data        | 11 |         |    2 | 00/1703 : 09 17       | rdbuffa         da      rdbuff         
+ 1346 |  1         cw.s    846 | Comment     | 11 |         |    0 | 00/1705               | *<sym>
+ 1347 |  1         cw.s    847 | Data        | 11 |         |    2 | 00/1705 : 00 00       | rreq            hex     0000           ; bytes requested
+ 1348 |  1         cw.s    848 | Comment     | 11 |         |    0 | 00/1707               | *<sym>
+ 1349 |  1         cw.s    849 | Data        | 11 |         |    2 | 00/1707 : 00 00       | readlen         hex     0000           ; bytes read
+ 1350 |  1         cw.s    850 | Comment     | 11 |         |    0 | 00/1709               | *<sym>
+ 1351 |  1         cw.s    851 | Data        | 11 |         |  256 | 00/1709 : 00 00 00 00 | rdbuff          ds      256            
       |                        |             |    |         |      |           00 00 00 00 |
       |                        |             |    |         |      |           00 00 00 00 |
       |                        |             |    |         |      |           00 00 00 00 |
@@ -1419,27 +1415,25 @@
       |                        |             |    |         |      |           00 00 00 00 |
       |                        |             |    |         |      |           00 00 00 00 |
       |                        |             |    |         |      |           00 00 00 00 |
- 1356 |  1         cw.s    855 | Comment     | 11 |         |    0 | 00/1809               | *<sym>
- 1357 |  1         cw.s    856 | Comment     | 11 |         |    0 | 00/1809               | *
- 1358 |  1         cw.s    857 | Comment     | 11 |         |    0 | 00/1809               | *<sym>
- 1359 |  1         cw.s    858 | Empty       | 11 |         |    0 | 00/1809               | c7_param                               ; GET_PREFIX
- 1360 |  1         cw.s    859 | Data        | 11 |         |    1 | 00/1809 : 01          |                 hex     01             ; number of params.
- 1361 |  1         cw.s    860 | Data        | 11 |         |    2 | 00/180A : 13 18       |                 da      path           
- 1362 |  1         cw.s    861 | Comment     | 11 |         |    0 | 00/180C               | *
- 1363 |  1         cw.s    862 | Comment     | 11 |         |    0 | 00/180C               | *<sym>
- 1364 |  1         cw.s    863 | Empty       | 11 |         |    0 | 00/180C               | c6_param                               ; SET_PREFIX
- 1365 |  1         cw.s    864 | Data        | 11 |         |    1 | 00/180C : 01          |                 hex     01             ; number of params.
- 1366 |  1         cw.s    865 | Data        | 11 |         |    2 | 00/180D : 13 18       |                 da      path           
- 1367 |  1         cw.s    866 | Comment     | 11 |         |    0 | 00/180F               | *
- 1368 |  1         cw.s    867 | Comment     | 11 |         |    0 | 00/180F               | *<sym>
- 1369 |  1         cw.s    868 | Empty       | 11 |         |    0 | 00/180F               | c5_param                               ; ONLINE
- 1370 |  1         cw.s    869 | Data        | 11 |         |    1 | 00/180F : 02          |                 hex     02             ; number of params.
- 1371 |  1         cw.s    870 | Comment     | 11 |         |    0 | 00/1810               | *<sym>
- 1372 |  1         cw.s    871 | Data        | 11 |         |    1 | 00/1810 : 00          | unit            hex     00             
- 1373 |  1         cw.s    872 | Data        | 11 |         |    2 | 00/1811 : 13 18       |                 da      path           
- 1374 |  1         cw.s    873 | Comment     | 11 |         |    0 | 00/1813               | *
- 1375 |  1         cw.s    874 | Comment     | 11 |         |    0 | 00/1813               | *<sym>
- 1376 |  1         cw.s    875 | Data        | 11 |         |  256 | 00/1813 : 00 00 00 00 | path            ds      256            ; storage for path
+ 1352 |  1         cw.s    852 | Comment     | 11 |         |    0 | 00/1809               | *<sym>
+ 1353 |  1         cw.s    853 | Empty       | 11 |         |    0 | 00/1809               | c7_param                               ; GET_PREFIX
+ 1354 |  1         cw.s    854 | Data        | 11 |         |    1 | 00/1809 : 01          |                 hex     01             ; number of params.
+ 1355 |  1         cw.s    855 | Data        | 11 |         |    2 | 00/180A : 13 18       |                 da      path           
+ 1356 |  1         cw.s    856 | Comment     | 11 |         |    0 | 00/180C               | *
+ 1357 |  1         cw.s    857 | Comment     | 11 |         |    0 | 00/180C               | *<sym>
+ 1358 |  1         cw.s    858 | Empty       | 11 |         |    0 | 00/180C               | c6_param                               ; SET_PREFIX
+ 1359 |  1         cw.s    859 | Data        | 11 |         |    1 | 00/180C : 01          |                 hex     01             ; number of params.
+ 1360 |  1         cw.s    860 | Data        | 11 |         |    2 | 00/180D : 13 18       |                 da      path           
+ 1361 |  1         cw.s    861 | Comment     | 11 |         |    0 | 00/180F               | *
+ 1362 |  1         cw.s    862 | Comment     | 11 |         |    0 | 00/180F               | *<sym>
+ 1363 |  1         cw.s    863 | Empty       | 11 |         |    0 | 00/180F               | c5_param                               ; ONLINE
+ 1364 |  1         cw.s    864 | Data        | 11 |         |    1 | 00/180F : 02          |                 hex     02             ; number of params.
+ 1365 |  1         cw.s    865 | Comment     | 11 |         |    0 | 00/1810               | *<sym>
+ 1366 |  1         cw.s    866 | Data        | 11 |         |    1 | 00/1810 : 00          | unit            hex     00             
+ 1367 |  1         cw.s    867 | Data        | 11 |         |    2 | 00/1811 : 13 18       |                 da      path           
+ 1368 |  1         cw.s    868 | Comment     | 11 |         |    0 | 00/1813               | *
+ 1369 |  1         cw.s    869 | Comment     | 11 |         |    0 | 00/1813               | *<sym>
+ 1370 |  1         cw.s    870 | Data        | 11 |         |  256 | 00/1813 : 00 00 00 00 | path            ds      256            ; storage for path
       |                        |             |    |         |      |           00 00 00 00 |
       |                        |             |    |         |      |           00 00 00 00 |
       |                        |             |    |         |      |           00 00 00 00 |
@@ -1503,104 +1497,105 @@
       |                        |             |    |         |      |           00 00 00 00 |
       |                        |             |    |         |      |           00 00 00 00 |
       |                        |             |    |         |      |           00 00 00 00 |
- 1377 |  1         cw.s    876 | Comment     | 11 |         |    0 | 00/1913               | *
- 1378 |  1         cw.s    877 | Comment     | 11 |         |    0 | 00/1913               | *<sym>
- 1379 |  1         cw.s    878 | Empty       | 11 |         |    0 | 00/1913               | c4_param                               ; GET_FILE_INFO
- 1380 |  1         cw.s    879 | Data        | 11 |         |    1 | 00/1913 : 0A          |                 hex     0A             
- 1381 |  1         cw.s    880 | Data        | 11 |         |    2 | 00/1914 : 13 18       |                 da      path           
- 1382 |  1         cw.s    881 | Comment     | 11 |         |    0 | 00/1916               | *<sym>
- 1383 |  1         cw.s    882 | Data        | 11 |         |    1 | 00/1916 : 00          | access          hex     00             
- 1384 |  1         cw.s    883 | Comment     | 11 |         |    0 | 00/1917               | *<sym>
- 1385 |  1         cw.s    884 | Data        | 11 |         |    1 | 00/1917 : 00          | ftype           hex     00             
- 1386 |  1         cw.s    885 | Comment     | 11 |         |    0 | 00/1918               | *<sym>
- 1387 |  1         cw.s    886 | Data        | 11 |         |    2 | 00/1918 : 00 00       | auxtype         hex     0000           
- 1388 |  1         cw.s    887 | Comment     | 11 |         |    0 | 00/191A               | *<sym>
- 1389 |  1         cw.s    888 | Data        | 11 |         |    1 | 00/191A : 00          | stotype         hex     00             
- 1390 |  1         cw.s    889 | Comment     | 11 |         |    0 | 00/191B               | *<sym>
- 1391 |  1         cw.s    890 | Data        | 11 |         |    2 | 00/191B : 00 00       | blocks          hex     0000           
- 1392 |  1         cw.s    891 | Comment     | 11 |         |    0 | 00/191D               | *<sym>
- 1393 |  1         cw.s    892 | Data        | 11 |         |    2 | 00/191D : 00 00       | date            hex     0000           
- 1394 |  1         cw.s    893 | Comment     | 11 |         |    0 | 00/191F               | *<sym>
- 1395 |  1         cw.s    894 | Data        | 11 |         |    2 | 00/191F : 00 00       | time            hex     0000           
- 1396 |  1         cw.s    895 | Data        | 11 |         |    2 | 00/1921 : 00 00       | cdate           hex     0000           
- 1397 |  1         cw.s    896 | Comment     | 11 |         |    0 | 00/1923               | *<sym>
- 1398 |  1         cw.s    897 | Data        | 11 |         |    2 | 00/1923 : 00 00       | ctime           hex     0000           
- 1399 |  1         cw.s    898 | Comment     | 11 |         |    0 | 00/1925               | *
- 1400 |  1         cw.s    899 | Comment     | 11 |         |    0 | 00/1925               | *<sym>
- 1401 |  1         cw.s    900 | Empty       | 11 |         |    0 | 00/1925               | d1_param                               ; GET_EOF
- 1402 |  1         cw.s    901 | Data        | 11 |         |    1 | 00/1925 : 02          |                 hex     02             
- 1403 |  1         cw.s    902 | Comment     | 11 |         |    0 | 00/1926               | *<sym>
- 1404 |  1         cw.s    903 | Data        | 11 |         |    1 | 00/1926 : 00          | refd1           hex     00             
- 1405 |  1         cw.s    904 | Comment     | 11 |         |    0 | 00/1927               | *<m2>
- 1406 |  1         cw.s    905 | Comment     | 11 |         |    0 | 00/1927               | *<sym>
- 1407 |  1         cw.s    906 | Data        | 11 |         |    3 | 00/1927 : 00 00 00    | filelength      ds      3              
- 1408 |  1         cw.s    907 | Comment     | 11 |         |    0 | 00/192A               | *<sym>
- 1409 |  1         cw.s    908 | Data        | 11 |         |    2 | 00/192A : 00 00       | max             ds      2              ; adress of last byte to analyse (+1) = $2000 + filelength
- 1410 |  1         cw.s    909 | Empty       | 11 |         |    0 | 00/192C               |                                        
- 1411 |  1         cw.s    910 | Comment     | 11 |         |    0 | 00/192C               | *********************** vars ***********************
- 1412 |  1         cw.s    911 | Comment     | 11 |         |    0 | 00/192C               | *<sym>
- 1413 |  1         cw.s    912 | Data        | 11 |         |    6 | 00/192C : 00 00 00 00 | myfac           ds      6              ; to store tempo FAC
+ 1371 |  1         cw.s    871 | Comment     | 11 |         |    0 | 00/1913               | *
+ 1372 |  1         cw.s    872 | Comment     | 11 |         |    0 | 00/1913               | *<sym>
+ 1373 |  1         cw.s    873 | Empty       | 11 |         |    0 | 00/1913               | c4_param                               ; GET_FILE_INFO
+ 1374 |  1         cw.s    874 | Data        | 11 |         |    1 | 00/1913 : 0A          |                 hex     0A             
+ 1375 |  1         cw.s    875 | Data        | 11 |         |    2 | 00/1914 : 13 18       |                 da      path           
+ 1376 |  1         cw.s    876 | Comment     | 11 |         |    0 | 00/1916               | *<sym>
+ 1377 |  1         cw.s    877 | Data        | 11 |         |    1 | 00/1916 : 00          | access          hex     00             
+ 1378 |  1         cw.s    878 | Comment     | 11 |         |    0 | 00/1917               | *<sym>
+ 1379 |  1         cw.s    879 | Data        | 11 |         |    1 | 00/1917 : 00          | ftype           hex     00             
+ 1380 |  1         cw.s    880 | Comment     | 11 |         |    0 | 00/1918               | *<sym>
+ 1381 |  1         cw.s    881 | Data        | 11 |         |    2 | 00/1918 : 00 00       | auxtype         hex     0000           
+ 1382 |  1         cw.s    882 | Comment     | 11 |         |    0 | 00/191A               | *<sym>
+ 1383 |  1         cw.s    883 | Data        | 11 |         |    1 | 00/191A : 00          | stotype         hex     00             
+ 1384 |  1         cw.s    884 | Comment     | 11 |         |    0 | 00/191B               | *<sym>
+ 1385 |  1         cw.s    885 | Data        | 11 |         |    2 | 00/191B : 00 00       | blocks          hex     0000           
+ 1386 |  1         cw.s    886 | Comment     | 11 |         |    0 | 00/191D               | *<sym>
+ 1387 |  1         cw.s    887 | Data        | 11 |         |    2 | 00/191D : 00 00       | date            hex     0000           
+ 1388 |  1         cw.s    888 | Comment     | 11 |         |    0 | 00/191F               | *<sym>
+ 1389 |  1         cw.s    889 | Data        | 11 |         |    2 | 00/191F : 00 00       | time            hex     0000           
+ 1390 |  1         cw.s    890 | Comment     | 11 |         |    0 | 00/1921               | *<sym>
+ 1391 |  1         cw.s    891 | Data        | 11 |         |    2 | 00/1921 : 00 00       | cdate           hex     0000           
+ 1392 |  1         cw.s    892 | Comment     | 11 |         |    0 | 00/1923               | *<sym>
+ 1393 |  1         cw.s    893 | Data        | 11 |         |    2 | 00/1923 : 00 00       | ctime           hex     0000           
+ 1394 |  1         cw.s    894 | Comment     | 11 |         |    0 | 00/1925               | *
+ 1395 |  1         cw.s    895 | Comment     | 11 |         |    0 | 00/1925               | *<sym>
+ 1396 |  1         cw.s    896 | Empty       | 11 |         |    0 | 00/1925               | d1_param                               ; GET_EOF
+ 1397 |  1         cw.s    897 | Data        | 11 |         |    1 | 00/1925 : 02          |                 hex     02             
+ 1398 |  1         cw.s    898 | Comment     | 11 |         |    0 | 00/1926               | *<sym>
+ 1399 |  1         cw.s    899 | Data        | 11 |         |    1 | 00/1926 : 00          | refd1           hex     00             
+ 1400 |  1         cw.s    900 | Comment     | 11 |         |    0 | 00/1927               | *<m2>
+ 1401 |  1         cw.s    901 | Comment     | 11 |         |    0 | 00/1927               | *<sym>
+ 1402 |  1         cw.s    902 | Data        | 11 |         |    3 | 00/1927 : 00 00 00    | filelength      ds      3              
+ 1403 |  1         cw.s    903 | Comment     | 11 |         |    0 | 00/192A               | *<sym>
+ 1404 |  1         cw.s    904 | Data        | 11 |         |    2 | 00/192A : 00 00       | max             ds      2              ; adress of last byte to analyse (+1) = $2000 + filelength
+ 1405 |  1         cw.s    905 | Empty       | 11 |         |    0 | 00/192C               |                                        
+ 1406 |  1         cw.s    906 | Comment     | 11 |         |    0 | 00/192C               | *********************** vars ***********************
+ 1407 |  1         cw.s    907 | Comment     | 11 |         |    0 | 00/192C               | *<sym>
+ 1408 |  1         cw.s    908 | Data        | 11 |         |    6 | 00/192C : 00 00 00 00 | myfac           ds      6              ; to store tempo FAC
       |                        |             |    |         |      |           00 00       |
- 1414 |  1         cw.s    913 | Comment     | 11 |         |    0 | 00/1932               | *<sym>
- 1415 |  1         cw.s    914 | Data        | 11 |         |    3 | 00/1932 : 00 00 00    | counter         hex     000000         ; store any counter here
- 1416 |  1         cw.s    915 | Comment     | 11 |         |    0 | 00/1935               | *<sym>
- 1417 |  1         cw.s    916 | Data        | 11 |         |    3 | 00/1935 : 00 00 00    | wordscnt        hex     000000         
- 1418 |  1         cw.s    917 | Comment     | 11 |         |    0 | 00/1938               | *<m1>
- 1419 |  1         cw.s    918 | Comment     | 11 |         |    0 | 00/1938               | *<sym>
- 1420 |  1         cw.s    919 | Data        | 11 |         |    1 | 00/1938 : 00          | noletter        ds      1              
- 1421 |  1         cw.s    920 | Empty       | 11 |         |    0 | 00/1939               |                                        
- 1422 |  1         cw.s    921 | Comment     | 11 |         |    0 | 00/1939               | *<sym>
- 1423 |  1         cw.s    922 | Data        | 11 |         |    3 | 00/1939 : 00 00 00    | recnum          hex     000000         
- 1424 |  1         cw.s    923 | Comment     | 11 |         |    0 | 00/193C               | *<sym>
- 1425 |  1         cw.s    924 | Data        | 11 |         |    2 | 00/193C : 00 00       | tempo           hex     0000           
- 1426 |  1         cw.s    925 | Comment     | 11 |         |    0 | 00/193E               | *<sym>
- 1427 |  1         cw.s    926 | Data        | 11 |         |    1 | 00/193E : 00          | progdiv         hex     00             
- 1428 |  1         cw.s    927 | Comment     | 11 |         |    0 | 00/193F               | *<sym>
- 1429 |  1         cw.s    928 | Data        | 11 |         |   16 | 00/193F : 30 31 32 33 | tohex           asc     '0123456789ABCDEF'
+ 1409 |  1         cw.s    909 | Comment     | 11 |         |    0 | 00/1932               | *<sym>
+ 1410 |  1         cw.s    910 | Data        | 11 |         |    3 | 00/1932 : 00 00 00    | counter         hex     000000         ; store any counter here
+ 1411 |  1         cw.s    911 | Comment     | 11 |         |    0 | 00/1935               | *<sym>
+ 1412 |  1         cw.s    912 | Data        | 11 |         |    3 | 00/1935 : 00 00 00    | wordscnt        hex     000000         
+ 1413 |  1         cw.s    913 | Comment     | 11 |         |    0 | 00/1938               | *<m1>
+ 1414 |  1         cw.s    914 | Comment     | 11 |         |    0 | 00/1938               | *<sym>
+ 1415 |  1         cw.s    915 | Data        | 11 |         |    1 | 00/1938 : 00          | noletter        ds      1              
+ 1416 |  1         cw.s    916 | Empty       | 11 |         |    0 | 00/1939               |                                        
+ 1417 |  1         cw.s    917 | Comment     | 11 |         |    0 | 00/1939               | *<sym>
+ 1418 |  1         cw.s    918 | Data        | 11 |         |    3 | 00/1939 : 00 00 00    | recnum          hex     000000         
+ 1419 |  1         cw.s    919 | Comment     | 11 |         |    0 | 00/193C               | *<sym>
+ 1420 |  1         cw.s    920 | Data        | 11 |         |    2 | 00/193C : 00 00       | tempo           hex     0000           
+ 1421 |  1         cw.s    921 | Comment     | 11 |         |    0 | 00/193E               | *<sym>
+ 1422 |  1         cw.s    922 | Data        | 11 |         |    1 | 00/193E : 00          | progdiv         hex     00             
+ 1423 |  1         cw.s    923 | Comment     | 11 |         |    0 | 00/193F               | *<sym>
+ 1424 |  1         cw.s    924 | Data        | 11 |         |   16 | 00/193F : 30 31 32 33 | tohex           asc     '0123456789ABCDEF'
       |                        |             |    |         |      |           34 35 36 37 |
       |                        |             |    |         |      |           38 39 41 42 |
       |                        |             |    |         |      |           43 44 45 46 |
- 1430 |  1         cw.s    929 | Empty       | 11 |         |    0 | 00/194F               |                                        
- 1431 |  1         cw.s    930 | Comment     | 11 |         |    0 | 00/194F               | *<sym>
- 1432 |  1         cw.s    931 | Data        | 11 |         |    1 | 00/194F : 00          | letter          ds      1              ; letter
- 1433 |  1         cw.s    932 | Comment     | 11 |         |    0 | 00/1950               | *<sym>
- 1434 |  1         cw.s    933 | Data        | 11 |         |    1 | 00/1950 : 00          | pos             ds      1              ; position of letter in pattern
- 1435 |  1         cw.s    934 | Empty       | 11 |         |    0 | 00/1951               |                                        
- 1436 |  1         cw.s    935 | Comment     | 11 |         |    0 | 00/1951               | *<sym>
- 1437 |  1         cw.s    936 | Data        | 11 |         |    1 | 00/1951 : 00          | savech          ds      1              
- 1438 |  1         cw.s    937 | Comment     | 11 |         |    0 | 00/1952               | *<sym>
- 1439 |  1         cw.s    938 | Data        | 11 |         |    2 | 00/1952 : 01 00       | quitflag        da      1              
- 1440 |  1         cw.s    939 | Comment     | 11 |         |    0 | 00/1954               | *<sym>
- 1441 |  1         cw.s    940 | Data        | 11 |         |    1 | 00/1954 : 00          | savebit         ds      1              
- 1442 |  1         cw.s    941 | Comment     | 11 |         |    0 | 00/1955               | *<sym>
- 1443 |  1         cw.s    942 | Data        | 11 |         |    1 | 00/1955 : 00          | col             ds      1              
- 1444 |  1         cw.s    943 | Comment     | 11 |         |    0 | 00/1956               | *<sym>
- 1445 |  1         cw.s    944 | Data        | 11 |         |    1 | 00/1956 : 00          | pbpos           ds      1              
- 1446 |  1         cw.s    945 | Comment     | 11 |         |    0 | 00/1957               | *<sym>
- 1447 |  1         cw.s    946 | Data        | 11 |         |    1 | 00/1957 : 00          | displayed       ds      1              
- 1448 |  1         cw.s    947 | Empty       | 11 |         |    0 | 00/1958               |                                        
- 1449 |  1         cw.s    948 | Comment     | 11 |         |    0 | 00/1958               | **** strings ****
- 1450 |  1         cw.s    949 | Comment     | 11 |         |    0 | 00/1958               | *<sym>
- 1451 |  1         cw.s    950 | Data        | 11 |         |    9 | 00/1958 : 08 C5 F2 F2 | kolib           str     "Error : "     
+ 1425 |  1         cw.s    925 | Empty       | 11 |         |    0 | 00/194F               |                                        
+ 1426 |  1         cw.s    926 | Comment     | 11 |         |    0 | 00/194F               | *<sym>
+ 1427 |  1         cw.s    927 | Data        | 11 |         |    1 | 00/194F : 00          | letter          ds      1              ; letter
+ 1428 |  1         cw.s    928 | Comment     | 11 |         |    0 | 00/1950               | *<sym>
+ 1429 |  1         cw.s    929 | Data        | 11 |         |    1 | 00/1950 : 00          | pos             ds      1              ; position of letter in pattern
+ 1430 |  1         cw.s    930 | Empty       | 11 |         |    0 | 00/1951               |                                        
+ 1431 |  1         cw.s    931 | Comment     | 11 |         |    0 | 00/1951               | *<sym>
+ 1432 |  1         cw.s    932 | Data        | 11 |         |    1 | 00/1951 : 00          | savech          ds      1              
+ 1433 |  1         cw.s    933 | Comment     | 11 |         |    0 | 00/1952               | *<sym>
+ 1434 |  1         cw.s    934 | Data        | 11 |         |    2 | 00/1952 : 01 00       | quitflag        da      1              
+ 1435 |  1         cw.s    935 | Comment     | 11 |         |    0 | 00/1954               | *<sym>
+ 1436 |  1         cw.s    936 | Data        | 11 |         |    1 | 00/1954 : 00          | savebit         ds      1              
+ 1437 |  1         cw.s    937 | Comment     | 11 |         |    0 | 00/1955               | *<sym>
+ 1438 |  1         cw.s    938 | Data        | 11 |         |    1 | 00/1955 : 00          | col             ds      1              
+ 1439 |  1         cw.s    939 | Comment     | 11 |         |    0 | 00/1956               | *<sym>
+ 1440 |  1         cw.s    940 | Data        | 11 |         |    1 | 00/1956 : 00          | pbpos           ds      1              
+ 1441 |  1         cw.s    941 | Comment     | 11 |         |    0 | 00/1957               | *<sym>
+ 1442 |  1         cw.s    942 | Data        | 11 |         |    1 | 00/1957 : 00          | displayed       ds      1              
+ 1443 |  1         cw.s    943 | Empty       | 11 |         |    0 | 00/1958               |                                        
+ 1444 |  1         cw.s    944 | Comment     | 11 |         |    0 | 00/1958               | **** strings ****
+ 1445 |  1         cw.s    945 | Comment     | 11 |         |    0 | 00/1958               | *<sym>
+ 1446 |  1         cw.s    946 | Data        | 11 |         |    9 | 00/1958 : 08 C5 F2 F2 | kolib           str     "Error : "     
       |                        |             |    |         |      |           EF F2 A0 BA |
       |                        |             |    |         |      |           A0          |
- 1452 |  1         cw.s    951 | Comment     | 11 |         |    0 | 00/1961               | *<sym>
- 1453 |  1         cw.s    952 | Data        | 11 |         |   13 | 00/1961 : 0C EF F0 E5 | oklib           str     "operation ok" 
+ 1447 |  1         cw.s    947 | Comment     | 11 |         |    0 | 00/1961               | *<sym>
+ 1448 |  1         cw.s    948 | Data        | 11 |         |   13 | 00/1961 : 0C EF F0 E5 | oklib           str     "operation ok" 
       |                        |             |    |         |      |           F2 E1 F4 E9 |
       |                        |             |    |         |      |           EF EE A0 EF |
       |                        |             |    |         |      |           EB          |
- 1454 |  1         cw.s    953 | Comment     | 11 |         |    0 | 00/196E               | *<sym>
- 1455 |  1         cw.s    954 | Data        | 11 |         |   14 | 00/196E : 0D 69 6E 64 | filelib         str     'index file : '
+ 1449 |  1         cw.s    949 | Comment     | 11 |         |    0 | 00/196E               | *<sym>
+ 1450 |  1         cw.s    950 | Data        | 11 |         |   14 | 00/196E : 0D 69 6E 64 | filelib         str     'index file : '
       |                        |             |    |         |      |           65 78 20 66 |
       |                        |             |    |         |      |           69 6C 65 20 |
       |                        |             |    |         |      |           3A 20       |
- 1456 |  1         cw.s    955 | Comment     | 11 |         |    0 | 00/197C               | *<sym>
- 1457 |  1         cw.s    956 | Data        | 11 |         |   15 | 00/197C : 0E 46 6F 75 | totallib        str     'Found words : '
+ 1451 |  1         cw.s    951 | Comment     | 11 |         |    0 | 00/197C               | *<sym>
+ 1452 |  1         cw.s    952 | Data        | 11 |         |   15 | 00/197C : 0E 46 6F 75 | totallib        str     'Found words : '
       |                        |             |    |         |      |           6E 64 20 77 |
       |                        |             |    |         |      |           6F 72 64 73 |
       |                        |             |    |         |      |           20 3A 20    |
- 1458 |  1         cw.s    957 | Comment     | 11 |         |    0 | 00/198B               | *<sym>
- 1459 |  1         cw.s    958 | Data        | 11 |         |   33 | 00/198B : 20 45 6E 74 | patternlib      str     'Enter pattern (A-Z a-z and ?) : '
+ 1453 |  1         cw.s    953 | Comment     | 11 |         |    0 | 00/198B               | *<sym>
+ 1454 |  1         cw.s    954 | Data        | 11 |         |   33 | 00/198B : 20 45 6E 74 | patternlib      str     'Enter pattern (A-Z a-z and ?) : '
       |                        |             |    |         |      |           65 72 20 70 |
       |                        |             |    |         |      |           61 74 74 65 |
       |                        |             |    |         |      |           72 6E 20 28 |
@@ -1609,20 +1604,20 @@
       |                        |             |    |         |      |           61 6E 64 20 |
       |                        |             |    |         |      |           3F 29 20 3A |
       |                        |             |    |         |      |           20          |
- 1460 |  1         cw.s    959 | Comment     | 11 |         |    0 | 00/19AC               | *<sym>
- 1461 |  1         cw.s    960 | Data        | 11 |         |   19 | 00/19AC : 12 45 72 72 | kopatlib        str     'Error in pattern !'
+ 1455 |  1         cw.s    955 | Comment     | 11 |         |    0 | 00/19AC               | *<sym>
+ 1456 |  1         cw.s    956 | Data        | 11 |         |   19 | 00/19AC : 12 45 72 72 | kopatlib        str     'Error in pattern !'
       |                        |             |    |         |      |           6F 72 20 69 |
       |                        |             |    |         |      |           6E 20 70 61 |
       |                        |             |    |         |      |           74 74 65 72 |
       |                        |             |    |         |      |           6E 20 21    |
- 1462 |  1         cw.s    961 | Comment     | 11 |         |    0 | 00/19BF               | *<sym>
- 1463 |  1         cw.s    962 | Data        | 11 |         |   11 | 00/19BF : 0A 50 61 74 | patlib          str     'Pattern : '   
+ 1457 |  1         cw.s    957 | Comment     | 11 |         |    0 | 00/19BF               | *<sym>
+ 1458 |  1         cw.s    958 | Data        | 11 |         |   11 | 00/19BF : 0A 50 61 74 | patlib          str     'Pattern : '   
       |                        |             |    |         |      |           74 65 72 6E |
       |                        |             |    |         |      |           20 3A 20    |
- 1464 |  1         cw.s    963 | Comment     | 11 |         |    0 | 00/19CA               | *<sym>
- 1465 |  1         cw.s    964 | Data        | 11 |         |    4 | 00/19CA : 03 20 3A 20 | seplib          str     ' : '          
- 1466 |  1         cw.s    965 | Comment     | 11 |         |    0 | 00/19CE               | *<sym>
- 1467 |  1         cw.s    966 | Data        | 11 |         |   61 | 00/19CE : 20 43 20 52 | titlelib        asc     ' C R O S S W ? R D   S O L V E R (v. 2.1.1 - French - ODS9++)'
+ 1459 |  1         cw.s    959 | Comment     | 11 |         |    0 | 00/19CA               | *<sym>
+ 1460 |  1         cw.s    960 | Data        | 11 |         |    4 | 00/19CA : 03 20 3A 20 | seplib          str     ' : '          
+ 1461 |  1         cw.s    961 | Comment     | 11 |         |    0 | 00/19CE               | *<sym>
+ 1462 |  1         cw.s    962 | Data        | 11 |         |   61 | 00/19CE : 20 43 20 52 | titlelib        asc     ' C R O S S W ? R D   S O L V E R (v. 2.1.1 - French - ODS9++)'
       |                        |             |    |         |      |           20 4F 20 53 |
       |                        |             |    |         |      |           20 53 20 57 |
       |                        |             |    |         |      |           20 3F 20 52 |
@@ -1638,13 +1633,13 @@
       |                        |             |    |         |      |           2D 20 4F 44 |
       |                        |             |    |         |      |           53 39 2B 2B |
       |                        |             |    |         |      |           29          |
- 1468 |  1         cw.s    967 | Data        | 11 |         |    1 | 00/1A0B : 00          |                 hex     00             
- 1469 |  1         cw.s    968 | Empty       | 11 |         |    0 | 00/1A0C               |                                        
- 1470 |  1         cw.s    969 | Comment     | 11 |         |    0 | 00/1A0C               | *<sym>
- 1471 |  1         cw.s    970 | Data        | 11 |         |    6 | 00/1A0C : 05 57 4F 52 | words           str     'WORDS'        
+ 1463 |  1         cw.s    963 | Data        | 11 |         |    1 | 00/1A0B : 00          |                 hex     00             
+ 1464 |  1         cw.s    964 | Empty       | 11 |         |    0 | 00/1A0C               |                                        
+ 1465 |  1         cw.s    965 | Comment     | 11 |         |    0 | 00/1A0C               | *<sym>
+ 1466 |  1         cw.s    966 | Data        | 11 |         |    6 | 00/1A0C : 05 57 4F 52 | words           str     'WORDS'        
       |                        |             |    |         |      |           44 53       |
- 1472 |  1         cw.s    971 | Comment     | 11 |         |    0 | 00/1A12               | *<sym>
- 1473 |  1         cw.s    972 | Data        | 11 |         |   38 | 00/1A12 : 25 50 72 65 | presskeylib     str     'Press a any key... (or esc. to abort)'
+ 1467 |  1         cw.s    967 | Comment     | 11 |         |    0 | 00/1A12               | *<sym>
+ 1468 |  1         cw.s    968 | Data        | 11 |         |   38 | 00/1A12 : 25 50 72 65 | presskeylib     str     'Press a any key... (or esc. to abort)'
       |                        |             |    |         |      |           73 73 20 61 |
       |                        |             |    |         |      |           20 61 6E 79 |
       |                        |             |    |         |      |           20 6B 65 79 |
@@ -1654,16 +1649,16 @@
       |                        |             |    |         |      |           20 74 6F 20 |
       |                        |             |    |         |      |           61 62 6F 72 |
       |                        |             |    |         |      |           74 29       |
- 1474 |  1         cw.s    973 | Empty       | 11 |         |    0 | 00/1A38               |                                        
- 1475 |  1         cw.s    974 | Comment     | 11 |         |    0 | 00/1A38               | *<sym>
- 1476 |  1         cw.s    975 | Data        | 11 |         |   16 | 00/1A38 : 00 00 00 00 | pattern         ds      16             
+ 1469 |  1         cw.s    969 | Empty       | 11 |         |    0 | 00/1A38               |                                        
+ 1470 |  1         cw.s    970 | Comment     | 11 |         |    0 | 00/1A38               | *<sym>
+ 1471 |  1         cw.s    971 | Data        | 11 |         |   16 | 00/1A38 : 00 00 00 00 | pattern         ds      16             
       |                        |             |    |         |      |           00 00 00 00 |
       |                        |             |    |         |      |           00 00 00 00 |
       |                        |             |    |         |      |           00 00 00 00 |
- 1477 |  1         cw.s    976 | Comment     | 11 |         |    0 | 00/1A48               | *<sym>
- 1478 |  1         cw.s    977 | Data        | 11 |         |    1 | 00/1A48 : 00          | refword         ds      1              
- 1479 |  1         cw.s    978 | Comment     | 11 |         |    0 | 00/1A49               | **************************************************
- 1480 |  1         cw.s    979 | Comment     | 11 |         |    0 | 00/1A49               | *<sym>
- 1481 |  1         cw.s    980 | Empty       | 11 |         |    0 | 00/1A49               | ozunid_4                               
- 1482 |  1         cw.s    980 | Equivalence | 11 |         |    0 | 00/1A49               | prgend          equ     ozunid_4       
+ 1472 |  1         cw.s    972 | Comment     | 11 |         |    0 | 00/1A48               | *<sym>
+ 1473 |  1         cw.s    973 | Data        | 11 |         |    1 | 00/1A48 : 00          | refword         ds      1              
+ 1474 |  1         cw.s    974 | Comment     | 11 |         |    0 | 00/1A49               | **************************************************
+ 1475 |  1         cw.s    975 | Comment     | 11 |         |    0 | 00/1A49               | *<sym>
+ 1476 |  1         cw.s    976 | Empty       | 11 |         |    0 | 00/1A49               | ozunid_4                               
+ 1477 |  1         cw.s    976 | Equivalence | 11 |         |    0 | 00/1A49               | prgend          equ     ozunid_4       
 ------+------------------------+-------------+----+---------+------+-----------------------+-------------------------------------------------------------------

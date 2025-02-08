@@ -808,9 +808,7 @@ refw    hex 00
 datab   hex 0020
 *<sym>
 lengw   hex 272F
-*<sym>
         hex 0000
-
 *<sym>
 c1_parms                ; DESTROY file
         hex 01
@@ -850,10 +848,7 @@ rreq    hex 0000        ; bytes requested
 *<sym>
 readlen hex 0000        ; bytes read
 *<sym>
-*
 rdbuff  ds 256
-*<sym>
-*
 *<sym>
 c7_param                ; GET_PREFIX
         hex 01          ; number of params.
@@ -892,6 +887,7 @@ blocks  hex 0000
 date    hex 0000
 *<sym>
 time    hex 0000
+*<sym>
 cdate   hex 0000
 *<sym>
 ctime   hex 0000
