@@ -1,4 +1,7 @@
 # FINAL
+# Programme écrit par chatGPT, suivant un cahier des charges (cf. cahier des charges.txt)
+# Plusieurs itérations ont été ncessaires
+
 import os
 import shutil
 import time

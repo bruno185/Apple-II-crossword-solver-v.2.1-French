@@ -38,7 +38,6 @@ echo --------------- fin Applecommander ---------------
 echo --------------- Debut Applewin ---------------
 rem launch applewin with image disk in drive
 rem %APPLEWIN% -d1 %PRG%.po
-rem SetBreaks.exe
-python debug.py
+SetBreaks.exe
 %APPLEWIN% -h1 %PRG%.po
 echo --------------- Fin Applewin ---------------

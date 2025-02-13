@@ -64,8 +64,7 @@
         org $1000
 
 *<sym>
-start   equ *
-
+start 
         jsr doprefix    ; get prefix, define it if not already set
         cld
         jsr $C300       ; 80 col. (http://www.deater.net/weave/vmwprod/demos/sizecoding.html)
